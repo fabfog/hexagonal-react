@@ -37,7 +37,9 @@ fi
 echo "  ✓ Removing from Next.js transpilePackages..."
 find apps -name "next.config.js" -type f 2>/dev/null | while read -r config_file; do
   if [ -f "$config_file" ]; then
-    sed -i '' "/\"$FULL_NAME\",/d" "$config_file"
+    # Escape forward slashes in package name for sed
+    ESCAPED_NAME=$(echo "$FULL_NAME" | sed 's/\//\\\//g')
+    sed -i '' "/\"$ESCAPED_NAME\",/d" "$config_file"
   fi
 done
 
