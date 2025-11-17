@@ -1,0 +1,14 @@
+import type { QueryHandlerInterface } from "@dxbox/use-less-react/classes";
+import { {{pascalCase name}}Query } from "@repo/domain";
+// TODO: Import required ports and types
+
+export class {{pascalCase name}}Handler implements QueryHandlerInterface<{{pascalCase name}}Query, any> {
+  constructor(
+    // TODO: Inject required dependencies
+  ) {}
+
+  async handle(query: {{pascalCase name}}Query): Promise<any> {
+    // TODO: Implement query logic
+    return [];
+  }
+}

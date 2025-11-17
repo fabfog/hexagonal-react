@@ -1,0 +1,19 @@
+import { DomainEvent } from "@dxbox/use-less-react/classes";
+
+export interface {{pascalCase name}}edPayload {
+  // TODO: Add event payload fields
+}
+
+export class {{pascalCase name}}edEvent extends DomainEvent<"{{pascalCase name}}ed", {{pascalCase name}}edPayload> {
+  get type(): "{{pascalCase name}}ed" {
+    return "{{pascalCase name}}ed";
+  }
+
+  constructor(payload: {{pascalCase name}}edPayload) {
+    super({
+      id: crypto.randomUUID(),
+      timestamp: new Date(),
+      payload,
+    });
+  }
+}

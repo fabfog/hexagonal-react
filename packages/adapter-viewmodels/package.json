@@ -1,0 +1,29 @@
+{
+  "name": "@repo/adapter-viewmodels",
+  "version": "0.0.0",
+  "private": true,
+  "description": "ViewModels adapter - Inbound adapter containing ViewModels that will be connected to UI presentational (dumb) components",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint . --max-warnings 0",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dxbox/use-less-react": "^0.10.1",
+    "@repo/domain": "workspace:*"
+  },
+  "devDependencies": {
+    "@repo/config-eslint": "workspace:*",
+    "@repo/config-typescript": "workspace:*",
+    "typescript": "^5.3.3"
+  }
+}

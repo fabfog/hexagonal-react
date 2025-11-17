@@ -1,0 +1,19 @@
+import { Query } from "@dxbox/use-less-react/classes";
+
+export interface {{pascalCase name}}Payload {
+  // TODO: Add query parameters
+}
+
+export class {{pascalCase name}}Query extends Query<"{{pascalCase name}}", {{pascalCase name}}Payload> {
+  get type(): "{{pascalCase name}}" {
+    return "{{pascalCase name}}";
+  }
+
+  constructor(payload: {{pascalCase name}}Payload = {}) {
+    super({
+      id: crypto.randomUUID(),
+      timestamp: new Date(),
+      payload,
+    });
+  }
+}

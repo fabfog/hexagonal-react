@@ -1,0 +1,39 @@
+{
+  "name": "@dxbox/create-hexagonal-react",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Create a new hexagonal architecture React monorepo",
+  "type": "module",
+  "bin": {
+    "create-hexagonal-react": "./bin/cli.js"
+  },
+  "files": [
+    "bin"
+  ],
+  "keywords": [
+    "hexagonal-architecture",
+    "react",
+    "monorepo",
+    "turborepo",
+    "cqrs",
+    "template"
+  ],
+  "dependencies": {
+    "prompts": "^2.4.2",
+    "chalk": "^5.3.0",
+    "ora": "^8.0.1",
+    "execa": "^9.0.0",
+    "fs-extra": "^11.2.0",
+    "validate-npm-package-name": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/hexagonal-react.git"
+  },
+  "license": "MIT"
+}

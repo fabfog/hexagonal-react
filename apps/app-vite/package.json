@@ -1,0 +1,38 @@
+{
+  "name": "app-vite",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Admin dashboard SPA built with Vite + React",
+  "scripts": {
+    "dev": "vite --port 3002",
+    "build": "tsc && vite build",
+    "preview": "vite preview --port 3002",
+    "lint": "eslint . --max-warnings 0",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dxbox/use-less-react": "^0.10.0",
+    "@repo/adapter-demo": "workspace:*",
+    "@repo/adapter-viewmodels": "workspace:*",
+    "@repo/domain": "workspace:*",
+    "@repo/ports": "workspace:*",
+    "@repo/use-cases": "workspace:*",
+    "@repo/ui": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@repo/config-eslint": "workspace:*",
+    "@repo/config-tailwind": "workspace:*",
+    "@repo/config-typescript": "workspace:*",
+    "@tailwindcss/vite": "^4.0.6",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^9.0.0",
+    "tailwindcss": "^4.0.6",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.11"
+  }
+}

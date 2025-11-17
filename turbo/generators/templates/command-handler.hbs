@@ -1,0 +1,24 @@
+import type {
+  CommandHandlerInterface,
+  HybridEventBusInterface,
+} from "@dxbox/use-less-react/classes";
+import { {{pascalCase name}}Command, {{pascalCase name}}edEvent } from "@repo/domain";
+// TODO: Import required ports
+
+export class {{pascalCase name}}Handler implements CommandHandlerInterface<{{pascalCase name}}Command> {
+  constructor(
+    // TODO: Inject required dependencies
+    private readonly eventBus: HybridEventBusInterface
+  ) {}
+
+  async handle(command: {{pascalCase name}}Command): Promise<void> {
+    // TODO: Implement command logic
+
+    // Publish domain event
+    await this.eventBus.publish(
+      new {{pascalCase name}}edEvent({
+        // TODO: Add event payload
+      })
+    );
+  }
+}

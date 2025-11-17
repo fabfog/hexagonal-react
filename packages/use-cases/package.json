@@ -1,0 +1,30 @@
+{
+  "name": "@repo/use-cases",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Use cases and handlers - Application logic layer (hexagonal architecture)",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint . --max-warnings 0",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dxbox/use-less-react": "^0.10.0",
+    "@repo/domain": "workspace:*",
+    "@repo/ports": "workspace:*"
+  },
+  "devDependencies": {
+    "@repo/config-eslint": "workspace:*",
+    "@repo/config-typescript": "workspace:*",
+    "typescript": "^5.3.3"
+  }
+}

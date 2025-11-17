@@ -1,0 +1,28 @@
+{
+  "name": "@dxbox/hexagonal-react",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Hexagonal architecture monorepo template with Turborepo",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "clean": "turbo clean && rm -rf node_modules",
+    "clean:demo": "bash scripts/clean-demo.sh",
+    "remove:adapter": "bash scripts/remove-adapter.sh",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "gen": "turbo gen"
+  },
+  "devDependencies": {
+    "@turbo/gen": "^2.6.1",
+    "eslint": "^9.0.0",
+    "prettier": "^3.1.1",
+    "turbo": "^2.6.1"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
