@@ -129,7 +129,6 @@ export function TasksList({ tasks, onComplete, onDelete }: TasksListProps) {
 
 ```
 hexagonal-react/
-├── hexagonal.config.js          # Architecture configuration
 ├── packages/
 │   ├── config-typescript/       # Shared TypeScript configs
 │   ├── config-eslint/           # ESLint rules enforcing architecture
@@ -166,20 +165,6 @@ hexagonal-react/
     └── app-vite/                # 🚀 Vite SPA app (port 3001)
         └── src/di/              # Composition root (DI container)
 ```
-
-### Modular Organization
-
-Each layer (`domain`, `ports`, `use-cases`) is organized by **modules** (also called bounded contexts):
-
-- **demo/** - Task Manager example (can be deleted)
-- **user/** - User management (add your own)
-- **product/** - Product catalog (add your own)
-
-This structure makes it easy to:
-
-- ✅ Add new modules without cluttering existing ones
-- ✅ Remove the demo with a simple `rm -rf packages/*/src/demo`
-- ✅ Scale to large projects with many domains
 
 ### Dependency Graph
 
@@ -334,115 +319,7 @@ pnpm lint
 
 ## Hexagonal Configuration
 
-The `hexagonal.config.js` file defines architectural boundaries:
-
-```javascript
-module.exports = {
-  // Where adapters can be imported (Composition Root)
-  compositionRoots: ["apps/*/src/di/**"],
-
-  // Package import restrictions
-  packageRestrictions: {
-    "@repo/domain": [
-      "@repo/adapter-*", // ❌ Domain cannot import adapters
-      "@repo/ports", // ❌ Domain cannot import ports
-      "@repo/use-cases", // ❌ Domain cannot import use-cases
-      "@repo/ui", // ❌ Domain cannot import UI
-    ],
-    "@repo/ports": [
-      "@repo/adapter-*", // ❌ Ports cannot import adapters
-      // Note: Ports CAN import @repo/domain (they define contracts using domain types/entities)
-      "@repo/use-cases", // ❌ Ports cannot import use-cases
-      "@repo/ui", // ❌ Ports cannot import UI
-    ],
-    "@repo/use-cases": [
-      "@repo/adapter-*", // ❌ Use-cases cannot import adapters
-      "@repo/ui", // ❌ Use-cases cannot import UI
-    ],
-    "@repo/adapter-*": [
-      "@repo/adapter-*", // ❌ No cross-adapter dependencies
-      "@repo/ui", // ❌ Adapters cannot import UI
-    ],
-    // ... more restrictions
-  },
-};
-```
-
-ESLint will enforce these rules at compile-time.
-
-## Adding a New Adapter
-
-### Adding an Outbound Adapter (e.g., Prisma database)
-
-1. Create new package:
-
-```bash
-mkdir packages/adapter-prisma
-```
-
-2. Update `hexagonal.config.js` (no changes needed - wildcard pattern `@repo/adapter-*`)
-
-3. Import in composition root:
-
-```typescript
-// apps/app-next/src/di/container.ts
-import { PrismaUserRepository } from "@repo/adapter-prisma";
-
-export const container = {
-  userRepository: new PrismaUserRepository(),
-};
-```
-
-4. ESLint prevents imports outside `src/di/` ✅
-
-### Adding an Inbound Adapter (e.g., CLI commands)
-
-1. Create new package:
-
-```bash
-mkdir packages/adapter-cli
-```
-
-2. Add your CLI command classes that dispatch domain commands:
-
-```typescript
-// packages/adapter-cli/src/create-task.command.ts
-export class CreateTaskCLICommand {
-  constructor(private commandBus: CommandBus) {}
-
-  async execute(args: string[]) {
-    await this.commandBus.dispatch(new CreateTaskCommand({ title: args[0] }));
-  }
-}
-```
-
-3. Wire it up in your app's entry point (same DI rules apply)
-
-## Why Hexagonal Architecture?
-
-### Without Hexagonal
-
-```typescript
-// ❌ Tightly coupled to Prisma
-import { prisma } from '@/lib/prisma';
-
-export default function UserPage() {
-  const users = await prisma.user.findMany();
-  return <div>{users.map(...)}</div>;
-}
-```
-
-### With Hexagonal
-
-```typescript
-// ✅ Decoupled - swap Prisma for anything
-import { container } from '@/di/container';
-
-export default function UserPage() {
-  const users = await container.userRepository.findAll();
-  return <div>{users.map(...)}</div>;
-}
-```
+The ESLint configurations inside `@repo/config-eslint` define architectural boundaries: ESLint will enforce these rules at compile-time.
 
 ## Key Benefits
 
