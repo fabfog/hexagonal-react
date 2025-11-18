@@ -9,8 +9,6 @@ export class CreateTaskCommand extends Command<"CreateTask", CreateTaskPayload> 
   }
 
   constructor(payload: CreateTaskPayload) {
-    super({
-      payload,
-    });
+    super(payload);
   }
 }

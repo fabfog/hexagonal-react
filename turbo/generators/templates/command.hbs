@@ -1,17 +1,15 @@
 import { Command } from "@dxbox/use-less-react/classes";
 
-export interface {{pascalCase name}}Payload {
+export interface {{pascalCase name}}CommandPayload {
   // TODO: Add command payload fields
 }
 
-export class {{pascalCase name}}Command extends Command<"{{pascalCase name}}", {{pascalCase name}}Payload> {
+export class {{pascalCase name}}Command extends Command<"{{pascalCase name}}", {{pascalCase name}}CommandPayload> {
   get type(): "{{pascalCase name}}" {
     return "{{pascalCase name}}";
   }
 
-  constructor(payload: {{pascalCase name}}Payload) {
-    super({
-      payload,
-    });
+  constructor(payload: {{pascalCase name}}CommandPayload) {
+    super(payload);
   }
 }

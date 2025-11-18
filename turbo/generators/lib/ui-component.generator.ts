@@ -1,4 +1,6 @@
 import type { PlopTypes } from "@turbo/gen";
+import { join } from "path";
+import { kebabCase, appendIfNotExists } from "./helpers";
 
 export function uiComponentGenerator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator("ui-component", {
@@ -27,10 +29,10 @@ export function uiComponentGenerator(plop: PlopTypes.NodePlopAPI): void {
         template: "",
         skipIfExists: true,
       },
-      {
-        type: "append",
-        path: "packages/ui/src/index.ts",
-        template: 'export * from "./{{kebabCase name}}";',
+      function (answers) {
+        const name = kebabCase((answers as any).name);
+        const indexPath = join(process.cwd(), "packages/ui/src/index.ts");
+        return appendIfNotExists(indexPath, `export * from "./${name}";`);
       },
     ],
   });

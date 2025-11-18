@@ -10,8 +10,6 @@ export class TaskDeletedEvent extends DomainEvent<"TaskDeleted", TaskDeletedPayl
   }
 
   constructor(payload: TaskDeletedPayload) {
-    super({
-      payload,
-    });
+    super(payload);
   }
 }

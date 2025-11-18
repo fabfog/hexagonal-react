@@ -1,4 +1,6 @@
 import type { PlopTypes } from "@turbo/gen";
+import { join } from "path";
+import { kebabCase, appendIfNotExists } from "./helpers";
 
 export function portGenerator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator("port", {
@@ -7,13 +9,12 @@ export function portGenerator(plop: PlopTypes.NodePlopAPI): void {
       {
         type: "input",
         name: "name",
-        message: "Port interface name (e.g., IEmailService, IPaymentGateway):",
+        message: "Port interface name (e.g., EmailServiceInterface, PaymentGatewayInterface):",
       },
       {
         type: "input",
         name: "module",
         message: "Module name:",
-        default: "demo",
       },
     ],
     actions: [
@@ -28,10 +29,11 @@ export function portGenerator(plop: PlopTypes.NodePlopAPI): void {
         template: "",
         skipIfExists: true,
       },
-      {
-        type: "append",
-        path: "packages/ports/src/{{kebabCase module}}/index.ts",
-        template: 'export * from "./{{kebabCase name}}.interface";',
+      function (answers) {
+        const module = kebabCase((answers as any).module);
+        const name = kebabCase((answers as any).name);
+        const modulePath = join(process.cwd(), "packages/ports/src", module, "index.ts");
+        return appendIfNotExists(modulePath, `export * from "./${name}.interface";`);
       },
       // Export module in main index
       {
@@ -40,10 +42,10 @@ export function portGenerator(plop: PlopTypes.NodePlopAPI): void {
         template: "",
         skipIfExists: true,
       },
-      {
-        type: "append",
-        path: "packages/ports/src/index.ts",
-        template: 'export * from "./{{kebabCase module}}";',
+      function (answers) {
+        const module = kebabCase((answers as any).module);
+        const indexPath = join(process.cwd(), "packages/ports/src/index.ts");
+        return appendIfNotExists(indexPath, `export * from "./${module}";`);
       },
     ],
   });

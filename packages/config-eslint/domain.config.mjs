@@ -7,8 +7,9 @@ export default [
   {
     ignores: ["**/dist/**", "**/node_modules/**", "**/.next/**", "**/build/**"],
   },
+  // Type-aware linting for source files
   {
-    files: ["**/*.ts", "**/*.tsx"],
+    files: ["src/**/*.ts", "src/**/*.tsx"],
     languageOptions: {
       parserOptions: {
         project: true,
@@ -46,4 +47,23 @@ export default [
       ],
     },
   },
+  // Type-aware linting for config files using tsconfig.vitest.json
+  {
+    files: ["*.config.ts", "*.config.mts", "*.config.cts"],
+    languageOptions: {
+      parserOptions: {
+        project: "./tsconfig.vitest.json",
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+      "@typescript-eslint/no-explicit-any": "warn",
+    },
+  }
 ];

@@ -4,7 +4,6 @@ import { entityGenerator } from "./lib/entity.generator";
 import { commandGenerator } from "./lib/command.generator";
 import { queryGenerator } from "./lib/query.generator";
 import { portGenerator } from "./lib/port.generator";
-import { repositoryGenerator } from "./lib/repository.generator";
 import { viewmodelGenerator } from "./lib/viewmodel.generator";
 import { uiComponentGenerator } from "./lib/ui-component.generator";
 import { adapterGenerator } from "./lib/adapter.generator";
@@ -26,7 +25,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
   commandGenerator(plop);
   queryGenerator(plop);
   portGenerator(plop);
-  repositoryGenerator(plop);
   adapterGenerator(plop);
   viewmodelGenerator(plop);
   uiComponentGenerator(plop);

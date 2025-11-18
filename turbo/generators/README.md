@@ -90,33 +90,7 @@ pnpm gen port
 - `packages/ports/src/<module>/<name>.interface.ts`
 - Updates `packages/ports/src/<module>/index.ts`
 
-### 5. Repository
-Creates a complete repository: Port interface + In-memory adapter.
-
-```bash
-pnpm gen repository
-```
-
-**Prompts:**
-- Entity name (e.g., User, Product)
-- Module name
-
-**Generates:**
-- `packages/ports/src/<module>/<entity>-repository.interface.ts`
-- `packages/adapter-demo/src/repositories/in-memory-<entity>-repository.ts`
-- Updates ports index file
-
-**Validation:**
-- The generator **requires** the entity to exist before creating the repository
-- If the entity doesn't exist, generation will fail with a clear error message
-- This ensures repositories always have valid type imports from `@repo/domain`
-
-**Remember to:**
-- **Always create the entity first** with `pnpm gen entity`
-- Instantiate the repository in DI container
-- Inject it into handlers that need it
-
-### 6. ViewModel
+### 5. ViewModel
 Creates a reactive ViewModel for UI state management.
 
 ```bash
@@ -133,6 +107,19 @@ pnpm gen viewmodel
 **Remember to:**
 - Instantiate in DI container
 - Create container component in apps to use it
+
+### 6. Adapter
+Creates an adapter package.
+
+```bash
+pnpm gen adapter
+```
+
+**Prompts:**
+- Adapter package name (e.g., "postgres")
+
+**Generates:**
+- `packages/adapter-<name>` with basic adapter package file structure
 
 ### 7. UI Component
 Creates a pure presentational React component.

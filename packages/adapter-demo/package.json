@@ -15,7 +15,8 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "lint": "eslint . --max-warnings 0",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "vitest"
   },
   "dependencies": {
     "@repo/domain": "workspace:*",
@@ -24,6 +25,8 @@
   "devDependencies": {
     "@repo/config-eslint": "workspace:*",
     "@repo/config-typescript": "workspace:*",
-    "typescript": "^5.3.3"
+    "@repo/config-vitest": "workspace:*",
+    "typescript": "^5.3.3",
+    "vitest": "^4.0.0"
   }
 }

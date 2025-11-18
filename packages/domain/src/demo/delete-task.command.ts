@@ -10,8 +10,6 @@ export class DeleteTaskCommand extends Command<"DeleteTask", DeleteTaskPayload> 
   }
 
   constructor(payload: DeleteTaskPayload) {
-    super({
-      payload,
-    });
+    super(payload);
   }
 }

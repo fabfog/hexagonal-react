@@ -10,8 +10,6 @@ export class UncompleteTaskCommand extends Command<"UncompleteTask", UncompleteT
   }
 
   constructor(payload: UncompleteTaskPayload) {
-    super({
-      payload,
-    });
+    super(payload);
   }
 }

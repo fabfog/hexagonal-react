@@ -11,8 +11,6 @@ export class TaskCreatedEvent extends DomainEvent<"TaskCreated", TaskCreatedPayl
   }
 
   constructor(payload: TaskCreatedPayload) {
-    super({
-      payload,
-    });
+    super(payload);
   }
 }

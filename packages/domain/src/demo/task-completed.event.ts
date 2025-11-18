@@ -11,8 +11,6 @@ export class TaskCompletedEvent extends DomainEvent<"TaskCompleted", TaskComplet
   }
 
   constructor(payload: TaskCompletedPayload) {
-    super({
-      payload,
-    });
+    super(payload);
   }
 }

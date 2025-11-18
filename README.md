@@ -8,6 +8,7 @@
 
 - ✅ **Hexagonal Architecture** - Clean separation of concerns (Domain, Ports, Adapters, UI)
 - ✅ **ESLint Enforcement** - Architecture boundaries enforced at compile-time
+- ✅ **Testing with Vitest** - Ready-to-use test configuration
 - ✅ **Turborepo** - Fast, scalable monorepo build system
 - ✅ **Multi-App Support** - `apps/*` pattern for multiple applications
 - ✅ **Composition Root** - Dependency injection enforced via ESLint
@@ -131,7 +132,6 @@ hexagonal-react/
 ├── hexagonal.config.js          # Architecture configuration
 ├── packages/
 │   ├── config-typescript/       # Shared TypeScript configs
-│   ├── config-tailwind/         # Shared Tailwind config
 │   ├── config-eslint/           # ESLint rules enforcing architecture
 │   ├── domain/                  # 📦 Business logic (modular)
 │   │   └── src/
@@ -266,6 +266,26 @@ This monorepo demonstrates framework-agnostic architecture:
 - ✅ Share the same adapters (`@repo/adapters-*`)
 - ✅ Enforce the same architecture via ESLint
 - ✅ Have independent DI containers (`src/di/`)
+
+### Testing
+
+The template includes **Vitest** configuration ready to use. Each testable package has a `test` script configured.
+
+```bash
+# Run all tests
+pnpm test
+
+# Run tests in specific package
+pnpm --filter @repo/domain test
+
+# Watch mode
+pnpm --filter @repo/domain test --watch
+
+# Coverage
+pnpm --filter @repo/domain test --coverage
+```
+
+Shared Vitest configuration is available in `@repo/config-vitest`.
 
 ### Removing the Demo
 

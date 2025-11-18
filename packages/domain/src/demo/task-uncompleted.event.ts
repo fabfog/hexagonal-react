@@ -11,8 +11,6 @@ export class TaskUncompletedEvent extends DomainEvent<"TaskUncompleted", TaskUnc
   }
 
   constructor(payload: TaskUncompletedPayload) {
-    super({
-      payload,
-    });
+    super(payload);
   }
 }

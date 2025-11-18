@@ -15,14 +15,17 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "lint": "eslint . --max-warnings 0",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "vitest"
   },
   "dependencies": {
-    "@dxbox/use-less-react": "^0.10.0"
+    "@dxbox/use-less-react": "^0.11.0"
   },
   "devDependencies": {
     "@repo/config-eslint": "workspace:*",
     "@repo/config-typescript": "workspace:*",
-    "typescript": "^5.3.3"
+    "@repo/config-vitest": "workspace:*",
+    "typescript": "^5.3.3",
+    "vitest": "^4.0.0"
   }
 }

@@ -1,4 +1,6 @@
 import type { PlopTypes } from "@turbo/gen";
+import { join } from "path";
+import { kebabCase, appendIfNotExists } from "./helpers";
 
 export function commandGenerator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator("command", {
@@ -13,7 +15,6 @@ export function commandGenerator(plop: PlopTypes.NodePlopAPI): void {
         type: "input",
         name: "module",
         message: "Module name:",
-        default: "demo",
       },
     ],
     actions: [
@@ -49,16 +50,18 @@ export function commandGenerator(plop: PlopTypes.NodePlopAPI): void {
         skipIfExists: true,
       },
       // Update exports
-      {
-        type: "append",
-        path: "packages/domain/src/{{kebabCase module}}/index.ts",
-        template:
-          'export * from "./{{kebabCase name}}.command";\nexport * from "./{{kebabCase name}}.event";',
+      function (answers) {
+        const module = kebabCase((answers as any).module);
+        const name = kebabCase((answers as any).name);
+        const modulePath = join(process.cwd(), "packages/domain/src", module, "index.ts");
+        appendIfNotExists(modulePath, `export * from "./${name}.command";`);
+        return appendIfNotExists(modulePath, `export * from "./${name}.event";`);
       },
-      {
-        type: "append",
-        path: "packages/use-cases/src/{{kebabCase module}}/index.ts",
-        template: 'export * from "./{{kebabCase name}}.handler";',
+      function (answers) {
+        const module = kebabCase((answers as any).module);
+        const name = kebabCase((answers as any).name);
+        const modulePath = join(process.cwd(), "packages/use-cases/src", module, "index.ts");
+        return appendIfNotExists(modulePath, `export * from "./${name}.handler";`);
       },
       // Export modules in main indexes
       {
@@ -67,10 +70,10 @@ export function commandGenerator(plop: PlopTypes.NodePlopAPI): void {
         template: "",
         skipIfExists: true,
       },
-      {
-        type: "append",
-        path: "packages/domain/src/index.ts",
-        template: 'export * from "./{{kebabCase module}}";',
+      function (answers) {
+        const module = kebabCase((answers as any).module);
+        const indexPath = join(process.cwd(), "packages/domain/src/index.ts");
+        return appendIfNotExists(indexPath, `export * from "./${module}";`);
       },
       {
         type: "add",
@@ -78,10 +81,10 @@ export function commandGenerator(plop: PlopTypes.NodePlopAPI): void {
         template: "",
         skipIfExists: true,
       },
-      {
-        type: "append",
-        path: "packages/use-cases/src/index.ts",
-        template: 'export * from "./{{kebabCase module}}";',
+      function (answers) {
+        const module = kebabCase((answers as any).module);
+        const indexPath = join(process.cwd(), "packages/use-cases/src/index.ts");
+        return appendIfNotExists(indexPath, `export * from "./${module}";`);
       },
     ],
   });

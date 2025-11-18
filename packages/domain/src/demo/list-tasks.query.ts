@@ -11,6 +11,6 @@ export class ListTasksQuery extends Query<"ListTasks", ListTasksPayload, Task[]>
   }
 
   constructor(payload: ListTasksPayload = {}) {
-    super(payload, crypto.randomUUID());
+    super(payload);
   }
 }

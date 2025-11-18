@@ -1,0 +1,19 @@
+{
+  "name": "@repo/config-vitest",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared Vitest configurations for testing",
+  "exports": {
+    ".": "./index.ts",
+    "./base": "./base.ts",
+    "./node": "./node.ts",
+    "./react": "./react.ts"
+  },
+  "files": [
+    "*.ts"
+  ],
+  "devDependencies": {
+    "vitest": "^4.0.0"
+  }
+}

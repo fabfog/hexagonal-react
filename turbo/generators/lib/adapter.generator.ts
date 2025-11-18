@@ -31,15 +31,19 @@ export function adapterGenerator(plop: PlopTypes.NodePlopAPI): void {
   "scripts": {
     "build": "tsc",
     "type-check": "tsc --noEmit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "vitest"
   },
   "dependencies": {
     "@repo/domain": "workspace:*",
     "@repo/ports": "workspace:*"
   },
   "devDependencies": {
+    "@repo/config-eslint": "workspace:*",
     "@repo/config-typescript": "workspace:*",
-    "typescript": "^5.3.3"
+    "@repo/config-vitest": "workspace:*",
+    "typescript": "^5.3.3",
+    "vitest": "^4.0.0"
   }
 }`,
       },
@@ -58,8 +62,33 @@ export function adapterGenerator(plop: PlopTypes.NodePlopAPI): void {
       },
       {
         type: "add",
+        path: "packages/adapter-{{kebabCase name}}/tsconfig.vitest.json",
+        template: `{
+  "extends": "@repo/config-typescript/vitest.json",
+  "include": ["*.ts"]
+}`,
+      },
+      {
+        type: "add",
         path: "packages/adapter-{{kebabCase name}}/src/index.ts",
         template: `// Export your {{kebabCase name}} adapters here
+`,
+      },
+      {
+        type: "add",
+        path: "packages/adapter-{{kebabCase name}}/vitest.config.ts",
+        template: `import { defineConfig, mergeConfig } from "vitest/config";
+import { nodeConfig } from "@repo/config-vitest/node";
+
+export default mergeConfig(nodeConfig as any, defineConfig({}));
+`,
+      },
+      {
+        type: "add",
+        path: "packages/adapter-{{kebabCase name}}/eslint.config.mjs",
+        template: `import adaptersConfig from "@repo/config-eslint/adapters.config.mjs";
+
+export default adaptersConfig;
 `,
       },
       {

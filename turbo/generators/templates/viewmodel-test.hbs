@@ -1,0 +1,50 @@
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { {{pascalCase name}}ViewModel } from "./{{kebabCase name}}.viewmodel";
+import type { HybridCommandBus, QueryBus } from "@dxbox/use-less-react/classes";
+
+describe("{{pascalCase name}}ViewModel", () => {
+  let mockCommandBus: HybridCommandBus;
+  let mockQueryBus: QueryBus;
+  let viewModel: {{pascalCase name}}ViewModel;
+
+  beforeEach(() => {
+    mockCommandBus = {
+      dispatch: vi.fn(),
+    } as any;
+
+    mockQueryBus = {
+      dispatch: vi.fn(),
+    } as any;
+
+    viewModel = new {{pascalCase name}}ViewModel(mockCommandBus, mockQueryBus);
+  });
+
+  describe("initialization", () => {
+    it("should initialize with default state", () => {
+      expect(viewModel.isLoading).toBe(false);
+      expect(viewModel.error).toBeNull();
+    });
+  });
+
+  // TODO: Add tests for your ViewModel methods
+  // Example:
+  // describe("loadData", () => {
+  //   it("should load data successfully", async () => {
+  //     vi.mocked(mockQueryBus.dispatch).mockResolvedValue(mockData);
+  //
+  //     await viewModel.loadData();
+  //
+  //     expect(mockQueryBus.dispatch).toHaveBeenCalled();
+  //     expect(viewModel.error).toBeNull();
+  //   });
+  //
+  //   it("should handle errors during load", async () => {
+  //     const error = new Error("Network error");
+  //     vi.mocked(mockQueryBus.dispatch).mockRejectedValue(error);
+  //
+  //     await viewModel.loadData();
+  //
+  //     expect(viewModel.error).toBe("Network error");
+  //   });
+  // });
+});

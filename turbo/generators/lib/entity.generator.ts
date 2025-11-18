@@ -1,4 +1,6 @@
 import type { PlopTypes } from "@turbo/gen";
+import { join } from "path";
+import { kebabCase, appendIfNotExists } from "./helpers";
 
 export function entityGenerator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator("entity", {
@@ -13,7 +15,6 @@ export function entityGenerator(plop: PlopTypes.NodePlopAPI): void {
         type: "input",
         name: "module",
         message: "Module name (e.g., auth, shop):",
-        default: "demo",
       },
     ],
     actions: [
@@ -28,10 +29,11 @@ export function entityGenerator(plop: PlopTypes.NodePlopAPI): void {
         template: "",
         skipIfExists: true,
       },
-      {
-        type: "append",
-        path: "packages/domain/src/{{kebabCase module}}/index.ts",
-        template: 'export * from "./{{kebabCase name}}.entity";',
+      function (answers) {
+        const module = kebabCase((answers as any).module);
+        const name = kebabCase((answers as any).name);
+        const modulePath = join(process.cwd(), "packages/domain/src", module, "index.ts");
+        return appendIfNotExists(modulePath, `export * from "./${name}.entity";`);
       },
       // Export module in main index
       {
@@ -40,10 +42,10 @@ export function entityGenerator(plop: PlopTypes.NodePlopAPI): void {
         template: "",
         skipIfExists: true,
       },
-      {
-        type: "append",
-        path: "packages/domain/src/index.ts",
-        template: 'export * from "./{{kebabCase module}}";',
+      function (answers) {
+        const module = kebabCase((answers as any).module);
+        const indexPath = join(process.cwd(), "packages/domain/src/index.ts");
+        return appendIfNotExists(indexPath, `export * from "./${module}";`);
       },
     ],
   });

@@ -11,6 +11,6 @@ export class GetTaskQuery extends Query<"GetTask", GetTaskPayload, Task | null> 
   }
 
   constructor(payload: GetTaskPayload) {
-    super(payload, crypto.randomUUID());
+    super(payload);
   }
 }

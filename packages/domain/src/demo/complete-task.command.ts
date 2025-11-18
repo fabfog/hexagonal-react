@@ -10,8 +10,6 @@ export class CompleteTaskCommand extends Command<"CompleteTask", CompleteTaskPay
   }
 
   constructor(payload: CompleteTaskPayload) {
-    super({
-      payload,
-    });
+    super(payload);
   }
 }
