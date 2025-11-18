@@ -66,7 +66,7 @@ export default [
         {
           patterns: [
             {
-              group: ["@repo/adapter-demo", "@repo/adapter-!(viewmodels)"],
+              group: ["@repo/adapter-!(viewmodels)"],
               message: "Apps cannot import infrastructure adapters directly. Only adapter-viewmodels are allowed in container components. Use DI container for everything else.",
             },
           ],

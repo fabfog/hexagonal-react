@@ -32,4 +32,4 @@
  * ```
  */
 
-export { TaskListViewModel } from "./task-list.viewmodel";
+export * from "./task-list.viewmodel";

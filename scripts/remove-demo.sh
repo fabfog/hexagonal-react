@@ -25,10 +25,10 @@ if [ -d "packages/ports/src/demo" ]; then
   rm -rf packages/ports/src/demo
 fi
 
-# Remove demo repositories
-if [ -f "packages/adapter-demo/src/repositories/in-memory-task-repository.ts" ]; then
-  echo "  ✓ Removing packages/adapter-demo/src/repositories/in-memory-task-repository.ts"
-  rm -f packages/adapter-demo/src/repositories/in-memory-task-repository.ts
+# Remove entire adapter-demo package
+if [ -d "packages/adapter-demo" ]; then
+  echo "  ✓ Removing packages/adapter-demo/"
+  rm -rf packages/adapter-demo
 fi
 
 # Remove demo viewmodels
@@ -56,6 +56,14 @@ if [ -f "apps/app-next/src/components/task-list.tsx" ]; then
   echo "  ✓ Removing apps/app-next/src/components/task-list.tsx"
   rm -f apps/app-next/src/components/task-list.tsx
 fi
+
+# Remove @repo/adapter-demo dependency from app package.json files
+echo "  ✓ Removing @repo/adapter-demo from app dependencies..."
+find apps -name "package.json" -type f 2>/dev/null | while read -r pkg_file; do
+  if [ -f "$pkg_file" ]; then
+    sed -i '' '/"@repo\/adapter-demo":/d' "$pkg_file"
+  fi
+done
 
 # Clean exports from index files
 echo "  ✓ Cleaning export statements..."
@@ -264,6 +272,11 @@ EOF
 
 echo ""
 echo "✅ Demo code removed successfully!"
+echo ""
+
+# Update pnpm lockfile
+echo "📦 Updating pnpm-lock.yaml..."
+pnpm install --lockfile-only 2>/dev/null || echo "  ⚠️  Please run 'pnpm install' manually to update lockfile"
 echo ""
 
 # Remove this script from package.json

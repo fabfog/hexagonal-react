@@ -14,4 +14,4 @@
  * Note: This adapter can ONLY be imported in the composition root (apps wildcard src/di wildcard)
  */
 
-export { InMemoryTaskRepository } from "./repositories";
+export * from "./repositories";

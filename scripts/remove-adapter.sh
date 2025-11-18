@@ -55,8 +55,36 @@ fi
 echo ""
 echo "✅ Adapter package removed successfully!"
 echo ""
+
+# Check for remaining references in code
+echo "🔍 Checking for remaining references in code..."
+REMAINING_REFS=$(grep -r "$FULL_NAME" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" apps packages 2>/dev/null || true)
+
+if [ -n "$REMAINING_REFS" ]; then
+  echo "⚠️  Warning: Found remaining references to $FULL_NAME:"
+  echo ""
+  echo "$REMAINING_REFS"
+  echo ""
+  echo "Please review and remove these references manually."
+  echo ""
+fi
+
+# Check for remaining references in index files
+echo "🔍 Checking for references in index files..."
+INDEX_REFS=$(grep -r "$(echo $ADAPTER_NAME | sed 's/adapter-//')" --include="index.ts" packages 2>/dev/null || true)
+
+if [ -n "$INDEX_REFS" ]; then
+  echo "⚠️  Warning: Potential references found in index files:"
+  echo ""
+  echo "$INDEX_REFS"
+  echo ""
+  echo "Please verify and clean these files if needed."
+  echo ""
+fi
+
 echo "Next steps:"
 echo "  1. Run: pnpm install"
-echo "  2. Remove any imports of $FULL_NAME from your code"
-echo "  3. Run: pnpm build"
+echo "  2. Remove any remaining imports of $FULL_NAME from your code (see warnings above)"
+echo "  3. Clean any index.ts files that may still reference the adapter"
+echo "  4. Run: pnpm build"
 echo ""
