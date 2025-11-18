@@ -26,7 +26,7 @@ export function commandGenerator(plop: PlopTypes.NodePlopAPI): void {
       // Event
       {
         type: "add",
-        path: "packages/domain/src/{{kebabCase module}}/{{kebabCase name}}ed.event.ts",
+        path: "packages/domain/src/{{kebabCase module}}/{{kebabCase name}}.event.ts",
         templateFile: "templates/event.hbs",
       },
       // Handler
@@ -53,7 +53,7 @@ export function commandGenerator(plop: PlopTypes.NodePlopAPI): void {
         type: "append",
         path: "packages/domain/src/{{kebabCase module}}/index.ts",
         template:
-          'export * from "./{{kebabCase name}}.command";\nexport * from "./{{kebabCase name}}ed.event";',
+          'export * from "./{{kebabCase name}}.command";\nexport * from "./{{kebabCase name}}.event";',
       },
       {
         type: "append",

@@ -11,8 +11,6 @@ export class {{pascalCase name}}Command extends Command<"{{pascalCase name}}", {
 
   constructor(payload: {{pascalCase name}}Payload) {
     super({
-      id: crypto.randomUUID(),
-      timestamp: new Date(),
       payload,
     });
   }

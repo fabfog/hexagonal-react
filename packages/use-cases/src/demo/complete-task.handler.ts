@@ -3,11 +3,11 @@ import type {
   HybridEventBusInterface,
 } from "@dxbox/use-less-react/classes";
 import { CompleteTaskCommand, TaskCompletedEvent } from "@repo/domain";
-import type { ITaskRepository } from "@repo/ports";
+import type { TaskRepositoryInterface } from "@repo/ports";
 
 export class CompleteTaskHandler implements CommandHandlerInterface<CompleteTaskCommand> {
   constructor(
-    private readonly taskRepository: ITaskRepository,
+    private readonly taskRepository: TaskRepositoryInterface,
     private readonly eventBus: HybridEventBusInterface
   ) {}
 

@@ -1,13 +1,13 @@
-import type { ITaskRepository } from "@repo/ports";
+import type { TaskRepositoryInterface } from "@repo/ports";
 import type { Task, CreateTaskData, UpdateTaskData } from "@repo/domain";
 
 /**
  * In-Memory Task Repository
  *
- * Demo implementation of ITaskRepository using an in-memory Map.
+ * Demo implementation of TaskRepositoryInterface using an in-memory Map.
  * Includes some seed data for demonstration purposes.
  */
-export class InMemoryTaskRepository implements ITaskRepository {
+export class InMemoryTaskRepository implements TaskRepositoryInterface {
   private tasks = new Map<string, Task>();
   private idCounter = 4; // Start after seed data
 

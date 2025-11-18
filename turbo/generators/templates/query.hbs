@@ -11,8 +11,6 @@ export class {{pascalCase name}}Query extends Query<"{{pascalCase name}}", {{pas
 
   constructor(payload: {{pascalCase name}}Payload = {}) {
     super({
-      id: crypto.randomUUID(),
-      timestamp: new Date(),
       payload,
     });
   }

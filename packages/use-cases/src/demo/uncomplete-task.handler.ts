@@ -3,11 +3,11 @@ import type {
   HybridEventBusInterface,
 } from "@dxbox/use-less-react/classes";
 import { UncompleteTaskCommand, TaskUncompletedEvent } from "@repo/domain";
-import type { ITaskRepository } from "@repo/ports";
+import type { TaskRepositoryInterface } from "@repo/ports";
 
 export class UncompleteTaskHandler implements CommandHandlerInterface<UncompleteTaskCommand> {
   constructor(
-    private readonly taskRepository: ITaskRepository,
+    private readonly taskRepository: TaskRepositoryInterface,
     private readonly eventBus: HybridEventBusInterface
   ) {}
 

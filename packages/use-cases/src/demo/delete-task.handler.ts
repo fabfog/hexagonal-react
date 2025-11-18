@@ -3,11 +3,11 @@ import type {
   HybridEventBusInterface,
 } from "@dxbox/use-less-react/classes";
 import { DeleteTaskCommand, TaskDeletedEvent } from "@repo/domain";
-import type { ITaskRepository } from "@repo/ports";
+import type { TaskRepositoryInterface } from "@repo/ports";
 
 export class DeleteTaskHandler implements CommandHandlerInterface<DeleteTaskCommand> {
   constructor(
-    private readonly taskRepository: ITaskRepository,
+    private readonly taskRepository: TaskRepositoryInterface,
     private readonly eventBus: HybridEventBusInterface
   ) {}
 

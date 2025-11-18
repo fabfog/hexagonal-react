@@ -1,21 +1,21 @@
-import type { I{{pascalCase entity}}Repository } from "@repo/ports";
+import type { {{pascalCase entity}}RepositoryInterface } from "@repo/ports";
 import type { {{pascalCase entity}}, Create{{pascalCase entity}}Data, Update{{pascalCase entity}}Data } from "@repo/domain";
 
 /**
- * In-Memory {{pascalCase entity}} Repository
+ * {{pascalCase entity}} Repository
  *
- * Demo implementation of I{{pascalCase entity}}Repository using an in-memory Map.
+ * Implementation of {{pascalCase entity}}RepositoryInterface.
  */
-export class InMemory{{pascalCase entity}}Repository implements I{{pascalCase entity}}Repository {
-  private {{camelCase entity}}s = new Map<string, {{pascalCase entity}}>();
+export class {{pascalCase entity}}Repository implements {{pascalCase entity}}RepositoryInterface {
+  private {{camelCase entity}}Map = new Map<string, {{pascalCase entity}}>();
   private idCounter = 1;
 
   async findById(id: string): Promise<{{pascalCase entity}} | null> {
-    return this.{{camelCase entity}}s.get(id) || null;
+    return this.{{camelCase entity}}Map.get(id) || null;
   }
 
   async findAll(filters?: Record<string, any>): Promise<{{pascalCase entity}}[]> {
-    return Array.from(this.{{camelCase entity}}s.values());
+    return Array.from(this.{{camelCase entity}}Map.values());
   }
 
   async create(data: Create{{pascalCase entity}}Data): Promise<{{pascalCase entity}}> {
@@ -25,12 +25,12 @@ export class InMemory{{pascalCase entity}}Repository implements I{{pascalCase en
       createdAt: new Date(),
     };
 
-    this.{{camelCase entity}}s.set({{camelCase entity}}.id, {{camelCase entity}});
+    this.{{camelCase entity}}Map.set({{camelCase entity}}.id, {{camelCase entity}});
     return {{camelCase entity}};
   }
 
   async update(id: string, data: Update{{pascalCase entity}}Data): Promise<{{pascalCase entity}} | null> {
-    const {{camelCase entity}} = this.{{camelCase entity}}s.get(id);
+    const {{camelCase entity}} = this.{{camelCase entity}}Map.get(id);
     if (!{{camelCase entity}}) return null;
 
     const updated: {{pascalCase entity}} = {
@@ -39,11 +39,11 @@ export class InMemory{{pascalCase entity}}Repository implements I{{pascalCase en
       updatedAt: new Date(),
     };
 
-    this.{{camelCase entity}}s.set(id, updated);
+    this.{{camelCase entity}}Map.set(id, updated);
     return updated;
   }
 
   async delete(id: string): Promise<boolean> {
-    return this.{{camelCase entity}}s.delete(id);
+    return this.{{camelCase entity}}Map.delete(id);
   }
 }

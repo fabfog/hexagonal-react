@@ -71,7 +71,7 @@ export function adapterGenerator(plop: PlopTypes.NodePlopAPI): void {
 
 ## Usage
 
-This package contains adapter implementations that integrate with {{name}}.
+This package contains adapter implementations that integrate with {{pascalCase name}}.
 
 Add your adapter implementations in the \`src/\` directory and export them from \`index.ts\`.
 `,

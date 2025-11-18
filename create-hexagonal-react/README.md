@@ -2,6 +2,13 @@
 
 A CLI tool to scaffold a new React monorepo with hexagonal architecture.
 
+## Requirements
+
+- **Node.js** >= 18.0.0
+- **pnpm** >= 8.0.0 (required)
+
+This project uses [pnpm](https://pnpm.io) workspaces and workspace protocol features. The CLI will check if pnpm is installed and provide installation instructions if needed.
+
 ## Features
 
 - 🏗️ **Hexagonal Architecture** - Clean separation of concerns with ports & adapters
@@ -96,12 +103,19 @@ The template includes a complete demo feature (Task Manager) that demonstrates:
 - Container/Presentational component pattern
 - ViewModel integration with React
 
-You can delete the demo by removing:
-- `packages/domain/src/demo/`
-- `packages/ports/src/demo/`
-- `packages/use-cases/src/demo/`
-- `packages/adapter-demo/`
-- Update app containers accordingly
+### Removing the Demo
+
+You can remove the demo code with a single command:
+
+```bash
+pnpm remove:demo
+```
+
+This will automatically:
+- Remove all demo code from domain, ports, use-cases, and adapters
+- Clean up demo components from both apps
+- Reset DI containers to minimal setup
+- Remove the cleanup script itself
 
 ## Documentation
 

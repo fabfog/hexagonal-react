@@ -2,14 +2,14 @@
 
 Utility scripts for project maintenance.
 
-## clean-demo.sh
+## remove-demo.sh
 
 Removes all demo/task-manager code from the project to start with a clean slate.
 
 ### Usage
 
 ```bash
-pnpm clean:demo
+pnpm remove:demo
 ```
 
 ### What it removes

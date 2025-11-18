@@ -12,7 +12,7 @@ import type { Task, CreateTaskData, UpdateTaskData } from "@repo/domain";
  * - Ports: defines interfaces for external dependencies using those entities
  * - Adapters: implement the port interfaces
  */
-export interface ITaskRepository {
+export interface TaskRepositoryInterface {
   /**
    * Find task by ID
    */

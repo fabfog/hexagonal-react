@@ -2,7 +2,7 @@ import type {
   CommandHandlerInterface,
   HybridEventBusInterface,
 } from "@dxbox/use-less-react/classes";
-import { {{pascalCase name}}Command, {{pascalCase name}}edEvent } from "@repo/domain";
+import { {{pascalCase name}}Command, {{pascalCase name}}Event } from "@repo/domain";
 // TODO: Import required ports
 
 export class {{pascalCase name}}Handler implements CommandHandlerInterface<{{pascalCase name}}Command> {
@@ -16,7 +16,7 @@ export class {{pascalCase name}}Handler implements CommandHandlerInterface<{{pas
 
     // Publish domain event
     await this.eventBus.publish(
-      new {{pascalCase name}}edEvent({
+      new {{pascalCase name}}Event({
         // TODO: Add event payload
       })
     );

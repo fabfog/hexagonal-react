@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script to remove all demo/task-manager code from the project
-# Usage: pnpm clean:demo
+# Usage: pnpm remove:demo
 
 set -e
 
@@ -269,12 +269,12 @@ echo ""
 # Remove this script from package.json
 echo "🗑️  Removing cleanup script from package.json..."
 if [ -f "package.json" ]; then
-  sed -i '' '/"clean:demo":/d' package.json
+  sed -i '' '/"remove:demo":/d' package.json
 fi
 
 # Remove script files
 echo "🗑️  Removing cleanup script files..."
-rm -f scripts/clean-demo.sh
+rm -f scripts/remove-demo.sh
 rm -f scripts/README.md
 
 # Remove scripts directory if empty
@@ -285,9 +285,5 @@ fi
 
 echo ""
 echo "Next steps:"
-echo "  1. Run: pnpm install"
-echo "  2. Run: pnpm build"
-echo "  3. Run: pnpm dev"
-echo ""
 echo "Start creating your own features with: pnpm gen"
 echo ""

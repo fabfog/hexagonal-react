@@ -9,7 +9,7 @@
     "lint": "turbo lint",
     "type-check": "turbo type-check",
     "clean": "turbo clean && rm -rf node_modules",
-    "clean:demo": "bash scripts/clean-demo.sh",
+    "remove:demo": "bash scripts/remove-demo.sh",
     "remove:adapter": "bash scripts/remove-adapter.sh",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
     "gen": "turbo gen"

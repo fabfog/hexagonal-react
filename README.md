@@ -38,7 +38,7 @@
 
 **What we need from the outside** - interfaces for external dependencies
 
-- Contains: ITaskRepository, IEmailService, etc.
+- Contains: TaskRepositoryInterface, IEmailService, etc.
 - **Only interfaces** - zero implementations
 - Depends on: `@repo/domain` (for type signatures only)
 - ✅ Pure TypeScript contracts

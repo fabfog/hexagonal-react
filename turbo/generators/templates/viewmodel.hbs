@@ -2,7 +2,7 @@ import { PubSub } from "@dxbox/use-less-react/classes";
 import type { HybridCommandBus, QueryBus } from "@dxbox/use-less-react/classes";
 
 /**
- * {{pascalCase name}}ViewModel - Inbound Adapter for {{name}} UI
+ * {{pascalCase name}}ViewModel for {{pascalCase name}} UI
  *
  * This is an **inbound adapter** that converts UI events into domain commands/queries.
  *
@@ -12,10 +12,8 @@ import type { HybridCommandBus, QueryBus } from "@dxbox/use-less-react/classes";
  * - Communicates with use-cases via command/query buses
  * - Notifies React components of state changes via PubSub
  *
- * Architecture:
+ * Usage with @dxbox/use-less-react:
  * - Extends PubSub for reactive updates
- * - Lives in @repo/adapter-viewmodels package (inbound adapter)
- * - Instantiated in the app's DI container
  * - Consumed by React components via useReactiveInstance hook
  */
 export class {{pascalCase name}}ViewModel extends PubSub {

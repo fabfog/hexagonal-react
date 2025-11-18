@@ -21,10 +21,32 @@ const LOCAL_TEMPLATE_PATH = USE_LOCAL_TEMPLATE
   ? path.resolve(USE_LOCAL_TEMPLATE)
   : path.resolve(__dirname, '../..');
 
+async function ensurePnpmInstalled() {
+  try {
+    await execa('pnpm', ['--version'], { stdio: 'ignore' });
+  } catch (error) {
+    console.log(chalk.red('\n❌ Error: pnpm is not installed\n'));
+    console.log(chalk.yellow('This project requires pnpm to work correctly.\n'));
+    console.log(chalk.cyan('Install pnpm using one of these methods:\n'));
+    console.log(chalk.gray('  # Using npm'));
+    console.log(chalk.white('  npm install -g pnpm\n'));
+    console.log(chalk.gray('  # Using Homebrew (macOS)'));
+    console.log(chalk.white('  brew install pnpm\n'));
+    console.log(chalk.gray('  # Using standalone script'));
+    console.log(chalk.white('  curl -fsSL https://get.pnpm.io/install.sh | sh -\n'));
+    console.log(chalk.gray('For more installation options, visit:'));
+    console.log(chalk.blue('  https://pnpm.io/installation\n'));
+    process.exit(1);
+  }
+}
+
 async function main() {
   console.log(
     chalk.bold.cyan('\n🏗️  Create Hexagonal React Monorepo\n')
   );
+
+  // Check if pnpm is installed
+  await ensurePnpmInstalled();
 
   // Get project name from command line arg or prompt
   let projectName = process.argv[2];
@@ -190,7 +212,7 @@ async function main() {
   console.log(chalk.gray('  • Vite:    http://localhost:3002\n'));
   console.log(chalk.yellow('📝 Demo code:\n'));
   console.log(chalk.gray('  The project includes a task manager demo to showcase the architecture.'));
-  console.log(chalk.gray(`  You can play with it and then remove it with: ${chalk.bold('pnpm clean:demo')}\n`));
+  console.log(chalk.gray(`  You can play with it and then remove it with: ${chalk.bold('pnpm remove:demo')}\n`));
   console.log(chalk.yellow('🚀 Generate code:\n'));
   console.log(chalk.gray(`  Create new entities, commands, queries, and more with: ${chalk.bold('pnpm gen')}\n`));
 }
