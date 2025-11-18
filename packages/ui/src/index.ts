@@ -14,27 +14,6 @@
  * - ✅ Define their own prop interfaces
  * - ✅ Composable in container components (app layer)
  *
- * Example:
- * ```typescript
- * // In @repo/ui
- * export function Alert({ severity, children, onClose }: AlertProps) {
- *   return <div className={severityStyles[severity]}>{children}</div>;
- * }
- *
- * // In app (container component)
- * import { Alert } from '@repo/ui';
- * import { taskListViewModel } from './di/container';
- *
- * function TaskListContainer() {
- *   const { state } = useReactiveInstance(taskListViewModel, ...);
- *   return (
- *     <>
- *       {state.error && <Alert severity="error">{state.error}</Alert>}
- *       <TasksList tasks={state.tasks} onComplete={...} />
- *     </>
- *   );
- * }
- * ```
  */
 
 // Atomic Components

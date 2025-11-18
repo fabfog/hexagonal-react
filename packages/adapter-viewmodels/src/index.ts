@@ -18,18 +18,6 @@
  * - ❌ Cannot import other adapters
  * - ❌ Cannot be imported directly in UI components (must go through DI)
  *
- * Example usage:
- * ```typescript
- * // In apps/app-next/src/di/container.ts (Composition Root ✅)
- * import { TaskListViewModel } from "@repo/adapter-viewmodels";
- *
- * const taskListViewModel = new TaskListViewModel(commandBus, queryBus);
- *
- * // In UI component
- * function TaskList({ viewModel }: { viewModel: TaskListViewModel }) {
- *   useReactiveInstance(viewModel, ...);
- * }
- * ```
  */
 
 export * from "./task-list.viewmodel";

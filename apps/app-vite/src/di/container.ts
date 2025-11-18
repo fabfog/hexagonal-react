@@ -1,17 +1,14 @@
 /**
  * Composition Root - Dependency Injection Container
  *
- * This is the ONLY place where adapters can be imported.
- * This enforces the hexagonal architecture pattern.
- *
- * ESLint will prevent imports of @repo/adapter-* anywhere else in the app.
+ * ESLint will prevent imports of @repo/adapter-* anywhere else in the app
+ * except for @repo/adapter-viewmodels
  */
 
 import { HybridCommandBus, QueryBus, HybridEventBus } from "@dxbox/use-less-react/classes";
 
 // Adapters (can ONLY be imported here)
 import { InMemoryTaskRepository } from "@repo/adapter-demo";
-import { TaskListViewModel } from "@repo/adapter-viewmodels";
 
 // Domain (commands, queries, event payloads)
 import {
@@ -21,10 +18,6 @@ import {
   DeleteTaskCommand,
   GetTaskQuery,
   ListTasksQuery,
-  type TaskCreatedPayload,
-  type TaskCompletedPayload,
-  type TaskUncompletedPayload,
-  type TaskDeletedPayload,
 } from "@repo/domain";
 
 // Use Cases (handlers)
@@ -54,11 +47,6 @@ export const queryBus = new QueryBus({});
 const taskRepository = new InMemoryTaskRepository();
 
 /**
- * ViewModels
- */
-export const taskListViewModel = new TaskListViewModel(commandBus, queryBus);
-
-/**
  * Handlers
  */
 const createTaskHandler = new CreateTaskHandler(taskRepository, eventBus);
@@ -81,36 +69,3 @@ commandBus.registerLocalHandler(DeleteTaskCommand.prototype.type, deleteTaskHand
  */
 queryBus.registerHandler(GetTaskQuery.prototype.type, getTaskHandler);
 queryBus.registerHandler(ListTasksQuery.prototype.type, listTasksHandler);
-
-/**
- * Register Event Handlers (optional - for side effects)
- */
-eventBus.registerLocalHandler("TaskCreated", async (event: { payload: TaskCreatedPayload }) => {
-  console.log("✅ Task created:", event.payload.task.title);
-});
-
-eventBus.registerLocalHandler("TaskCompleted", async (event: { payload: TaskCompletedPayload }) => {
-  console.log("✅ Task completed:", event.payload.taskId);
-});
-
-eventBus.registerLocalHandler("TaskUncompleted", async (event: { payload: TaskUncompletedPayload }) => {
-  console.log("↩️  Task uncompleted:", event.payload.taskId);
-});
-
-eventBus.registerLocalHandler("TaskDeleted", async (event: { payload: TaskDeletedPayload }) => {
-  console.log("🗑️  Task deleted:", event.payload.taskId);
-});
-
-/**
- * Container Export
- * Export all dependencies for use in the application
- */
-export const container = {
-  // Buses
-  eventBus,
-  commandBus,
-  queryBus,
-
-  // Repositories
-  taskRepository,
-};

@@ -84,25 +84,32 @@ In hexagonal architecture, adapters come in two flavors:
 
 - Contains: TaskList, TaskForm, Button, etc.
 - **Zero business logic** - only rendering
-- Receive ViewModels via props (from DI container)
-- Use `useReactiveInstance` hook to consume ViewModels
+- Receive bare props
 - Can import types from Domain (e.g., `Task`)
 - ❌ Cannot import use-cases, ports, or adapters
-- ❌ Cannot import ViewModels directly (they come from `@repo/adapter-viewmodels` via DI)
 
 Example:
-```typescript
-import { useReactiveInstance } from '@dxbox/use-less-react/client';
-import type { TaskListViewModel } from '@repo/adapter-viewmodels';
+```tsx
+export interface Task {
+  id: string;
+  title: string;
+  completed: boolean;
+}
 
-export function TaskList({ viewModel }: { viewModel: TaskListViewModel }) {
-  const { state: { tasks } } = useReactiveInstance(
-    viewModel,
-    (vm) => ({ tasks: vm.tasks }),
-    ["tasks"]
-  );
+export interface TasksListProps {
+  tasks: Task[];
+  onComplete: (id: string) => void;
+  onDelete: (id: string) => void;
+}
 
-  return <ul>{tasks.map(task => <li key={task.id}>{task.title}</li>)}</ul>;
+export function TasksList({ tasks, onComplete, onDelete }: TasksListProps) {
+  return (
+    <ul className="space-y-2">
+      {tasks.map((task) => (
+        // ... render item
+      )}
+    </ul>
+  )
 }
 ```
 
@@ -208,7 +215,7 @@ This structure makes it easy to:
 - ✅ Use-cases → Domain + Ports
 - ✅ Adapters (outbound) → Ports (+ Domain for types)
 - ✅ Adapters (inbound/ViewModels) → Domain (for commands/queries) + Buses
-- ✅ UI (Components) → Domain (types only), receive ViewModels via props
+- ✅ UI (Components) → Domain (types only), receive bare props
 - ✅ Apps → Everything (wiring in DI container, instantiates ViewModels and repositories)
 
 ## Getting Started

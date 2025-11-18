@@ -20,7 +20,8 @@ import {
   LoadingSpinner,
   TasksList,
 } from "@repo/ui";
-import { taskListViewModel } from "../di/container";
+import { TaskListViewModel } from "@repo/adapter-viewmodels";
+import { commandBus, queryBus } from "@/di/container";
 
 export function TaskListContainer() {
   const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -28,8 +29,9 @@ export function TaskListContainer() {
   // Subscribe to ViewModel changes and extract state
   const {
     state: { error, isLoading, tasks },
+    instance: taskListViewModel,
   } = useReactiveInstance(
-    taskListViewModel,
+    () => new TaskListViewModel(commandBus, queryBus),
     (vm) => ({
       tasks: vm.tasks.map((t) => ({
         id: t.id,
@@ -45,7 +47,7 @@ export function TaskListContainer() {
   // Load tasks when component mounts
   useEffect(() => {
     taskListViewModel.loadTasks();
-  }, []);
+  }, [taskListViewModel]);
 
   // Callbacks
   const handleCreateTask = () => {
@@ -101,24 +103,17 @@ export function TaskListContainer() {
 
       {/* Empty State */}
       {!isLoading && tasks.length === 0 && (
-        <Alert severity="info">
-          No tasks yet. Create one to get started!
-        </Alert>
+        <Alert severity="info">No tasks yet. Create one to get started!</Alert>
       )}
 
       {/* Tasks List */}
       {!isLoading && tasks.length > 0 && (
         <>
-          <TasksList
-            tasks={tasks}
-            onComplete={handleCompleteTask}
-            onDelete={handleDeleteTask}
-          />
+          <TasksList tasks={tasks} onComplete={handleCompleteTask} onDelete={handleDeleteTask} />
 
           {/* Task Count */}
           <div className="mt-4 text-sm text-gray-500 text-center">
-            {tasks.filter((t) => !t.completed).length} of {tasks.length} tasks
-            remaining
+            {tasks.filter((t) => !t.completed).length} of {tasks.length} tasks remaining
           </div>
         </>
       )}
