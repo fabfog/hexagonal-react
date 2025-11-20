@@ -2,6 +2,7 @@ import type { PlopTypes } from "@turbo/gen";
 import { pascalCase, camelCase, kebabCase } from "./lib/helpers";
 import { entityGenerator } from "./lib/entity.generator";
 import { commandGenerator } from "./lib/command.generator";
+import { eventGenerator } from "./lib/event.generator";
 import { queryGenerator } from "./lib/query.generator";
 import { portGenerator } from "./lib/port.generator";
 import { viewmodelGenerator } from "./lib/viewmodel.generator";
@@ -23,6 +24,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
   // Register all generators
   entityGenerator(plop);
   commandGenerator(plop);
+  eventGenerator(plop);
   queryGenerator(plop);
   portGenerator(plop);
   adapterGenerator(plop);

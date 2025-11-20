@@ -1,5 +1,5 @@
-import { PubSub } from "@dxbox/use-less-react/classes";
-import type { HybridCommandBus, QueryBus } from "@dxbox/use-less-react/classes";
+import { PubSub, EventHandlerBuilder } from "@dxbox/use-less-react/classes";
+import type { HybridCommandBus, HybridEventBusInterface, QueryBus } from "@dxbox/use-less-react/classes";
 
 /**
  * {{pascalCase name}}ViewModel for {{pascalCase name}} UI
@@ -23,10 +23,17 @@ export class {{pascalCase name}}ViewModel extends PubSub {
 
   constructor(
     private readonly commandBus: HybridCommandBus,
-    private readonly queryBus: QueryBus
+    private readonly queryBus: QueryBus,
+    private readonly eventBus: HybridEventBusInterface
   ) {
     super();
     this.makeReactiveProperties("isLoading", "error");
+  }
+
+  subscribeToEvents() {
+    return new EventHandlerBuilder(this.eventBus)
+      // .on<EventClass>(EventClass.prototype.type, async (event) => {})
+      .build();
   }
 
   // TODO: Add action methods

@@ -4,7 +4,7 @@ import { kebabCase, appendIfNotExists } from "./helpers";
 
 export function commandGenerator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator("command", {
-    description: "Create a new command with handler and event",
+    description: "Create a new command with handler",
     prompts: [
       {
         type: "input",
@@ -23,12 +23,6 @@ export function commandGenerator(plop: PlopTypes.NodePlopAPI): void {
         type: "add",
         path: "packages/domain/src/{{kebabCase module}}/{{kebabCase name}}.command.ts",
         templateFile: "templates/command.hbs",
-      },
-      // Event
-      {
-        type: "add",
-        path: "packages/domain/src/{{kebabCase module}}/{{kebabCase name}}.event.ts",
-        templateFile: "templates/event.hbs",
       },
       // Handler
       {
@@ -54,8 +48,7 @@ export function commandGenerator(plop: PlopTypes.NodePlopAPI): void {
         const module = kebabCase((answers as any).module);
         const name = kebabCase((answers as any).name);
         const modulePath = join(process.cwd(), "packages/domain/src", module, "index.ts");
-        appendIfNotExists(modulePath, `export * from "./${name}.command";`);
-        return appendIfNotExists(modulePath, `export * from "./${name}.event";`);
+        return appendIfNotExists(modulePath, `export * from "./${name}.command";`);
       },
       function (answers) {
         const module = kebabCase((answers as any).module);
