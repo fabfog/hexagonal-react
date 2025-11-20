@@ -21,7 +21,7 @@ import {
   TasksList,
 } from "@repo/ui";
 import { TaskListViewModel } from "@repo/adapter-viewmodels";
-import { commandBus, queryBus } from "@/di/container";
+import { commandBus, queryBus } from "@/di/messaging";
 
 export function TaskListContainer() {
   const [newTaskTitle, setNewTaskTitle] = useState("");

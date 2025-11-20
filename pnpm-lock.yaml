@@ -24,8 +24,8 @@ importers:
   apps/app-next:
     dependencies:
       '@dxbox/use-less-react':
-        specifier: ^0.11.0
-        version: 0.11.0(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0)
+        specifier: ^0.12.0
+        version: 0.12.1(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0)
       '@repo/adapter-demo':
         specifier: workspace:*
         version: link:../../packages/adapter-demo
@@ -88,8 +88,8 @@ importers:
   apps/app-vite:
     dependencies:
       '@dxbox/use-less-react':
-        specifier: ^0.11.0
-        version: 0.11.0(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0)
+        specifier: ^0.12.0
+        version: 0.12.1(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0)
       '@repo/adapter-demo':
         specifier: workspace:*
         version: link:../../packages/adapter-demo
@@ -174,8 +174,8 @@ importers:
   packages/adapter-viewmodels:
     dependencies:
       '@dxbox/use-less-react':
-        specifier: ^0.11.0
-        version: 0.11.0(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0)
+        specifier: ^0.12.0
+        version: 0.12.1(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0)
       '@repo/domain':
         specifier: workspace:*
         version: link:../domain
@@ -234,8 +234,8 @@ importers:
   packages/domain:
     dependencies:
       '@dxbox/use-less-react':
-        specifier: ^0.11.0
-        version: 0.11.0(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0)
+        specifier: ^0.12.0
+        version: 0.12.1(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0)
     devDependencies:
       '@repo/config-eslint':
         specifier: workspace:*
@@ -300,8 +300,8 @@ importers:
   packages/use-cases:
     dependencies:
       '@dxbox/use-less-react':
-        specifier: ^0.11.0
-        version: 0.11.0(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0)
+        specifier: ^0.12.0
+        version: 0.12.1(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0)
       '@repo/domain':
         specifier: workspace:*
         version: link:../domain
@@ -522,8 +522,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
-  /@dxbox/use-less-react@0.11.0(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0):
-    resolution: {integrity: sha512-96iqHeDvizI0DK/IKWLrnBxI3WlYIfcuSRyacNwHpt890QQeYujDvlr85OzA2yp4rOfMG3cpMmX+Ol54fwPoVw==}
+  /@dxbox/use-less-react@0.12.1(fast-deep-equal@3.1.3)(react-dom@19.2.0)(react@19.2.0):
+    resolution: {integrity: sha512-Ry4823MEV2yQTR2QnR6foY8AlaQSbbs7RrbNljXFTQIXPZuNNY90NUQjeHU4cTqWahwDaWXtKKb86wl3R+PMyw==}
     peerDependencies:
       fast-deep-equal: ^3.1.3
       react: '>=18.0.0'
@@ -2441,11 +2441,6 @@ packages:
       ieee754: 1.2.1
     dev: true
 
-  /cac@6.7.14:
-    resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
-    engines: {node: '>=8'}
-    dev: true
-
   /call-bind-apply-helpers@1.0.2:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
     engines: {node: '>= 0.4'}
@@ -2544,11 +2539,6 @@ packages:
 
   /chardet@2.1.1:
     resolution: {integrity: sha512-PsezH1rqdV9VvyNhxxOW32/d75r01NY7TQCmOqomRo15ZSOKbpTFVsfjghxo6JloQUCGnH4k1LGu0R4yCLlWQQ==}
-    dev: true
-
-  /check-error@2.1.1:
-    resolution: {integrity: sha512-OAlb+T7V4Op9OwdkjmguYRqncdlx5JiofwOAUkmTF+jNdHwzTaTs4sRAGpzLF3oOz5xAyDGrPgeIDFQmDOTiJw==}
-    engines: {node: '>= 16'}
     dev: true
 
   /clean-stack@2.2.0:
@@ -2694,11 +2684,6 @@ packages:
         optional: true
     dependencies:
       ms: 2.1.3
-
-  /deep-eql@5.0.2:
-    resolution: {integrity: sha512-h5k/5U50IJJFpzfL6nO9jaaumfjO/f2NjK/oYB2Djzm4p9L+3T9qWpZqZ2hAbLPuuYq9wrU08WQyBTL5GbPk5Q==}
-    engines: {node: '>=6'}
-    dev: true
 
   /deep-extend@0.6.0:
     resolution: {integrity: sha512-LOHxIOaPYdHlJRtCQfDIVZtfw/ufM8+rVj649RIHzcm/vGwQRXFt6OPqIFWsm2XEMrNIEtWR64sY1LEKD2vAOA==}
@@ -4201,10 +4186,6 @@ packages:
       js-tokens: 4.0.0
     dev: false
 
-  /loupe@3.2.1:
-    resolution: {integrity: sha512-CdzqowRJCeLU72bHvWqwRBBlLcMEtIvGrlvef74kMnV2AolS9Y8xUv1I0U/MNAWMhBlKIoyuEgoJ0t/bbwHbLQ==}
-    dev: true
-
   /lower-case-first@1.0.2:
     resolution: {integrity: sha512-UuxaYakO7XeONbKrZf5FEgkantPf5DUqDayzP5VXZrtRPdH86s4kN47I8B3TW10S4QKiE3ziHNf3kRN//okHjA==}
     dependencies:
@@ -5590,28 +5571,6 @@ packages:
   /validate-npm-package-name@5.0.1:
     resolution: {integrity: sha512-OljLrQ9SQdOUqTaQxqL5dEfZWrXExyyWsozYlAWFawPVNuD83igl7uJD2RTkNMbniIYgt8l81eCJGIdQF7avLQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
-    dev: true
-
-  /vite-node@2.1.9(@types/node@20.19.25):
-    resolution: {integrity: sha512-AM9aQ/IPrW/6ENLQg3AGY4K1N2TGZdR5e4gu/MmmR2xR3Ll1+dib+nook92g4TV3PXVyeyxdWwtaCAiUL0hMxA==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    hasBin: true
-    dependencies:
-      cac: 6.7.14
-      debug: 4.4.3
-      es-module-lexer: 1.7.0
-      pathe: 1.1.2
-      vite: 5.4.21(@types/node@20.19.25)
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
     dev: true
 
   /vite@5.4.21(@types/node@20.19.25):

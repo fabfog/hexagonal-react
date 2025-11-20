@@ -19,7 +19,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@dxbox/use-less-react": "^0.11.0"
+    "@dxbox/use-less-react": "^0.12.0"
   },
   "devDependencies": {
     "@repo/config-eslint": "workspace:*",

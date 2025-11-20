@@ -1,4 +1,5 @@
 import { TaskListContainer } from "./components/task-list-container";
+import "@/di/demo"; // Initialize demo module (registers handlers)
 
 export default function App() {
   return (

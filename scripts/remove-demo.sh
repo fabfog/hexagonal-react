@@ -96,69 +96,17 @@ find apps -name "next.config.js" -type f 2>/dev/null | while read -r config_file
   fi
 done
 
-# Reset DI container for app-vite
-cat > apps/app-vite/src/di/container.ts << 'EOF'
-import { CommandBus, EventBus, HybridCommandBus, QueryBus } from "@dxbox/use-less-react/classes";
+# Remove demo module from DI in app-vite
+if [ -d "apps/app-vite/src/di/demo" ]; then
+  echo "  ✓ Removing apps/app-vite/src/di/demo/"
+  rm -rf apps/app-vite/src/di/demo
+fi
 
-/**
- * Dependency Injection Container
- *
- * This is where we wire up our hexagonal architecture:
- * - Instantiate repositories (adapters)
- * - Create use-case handlers
- * - Register handlers with command/query buses
- * - Create ViewModels with their dependencies
- */
-
-// Create buses
-export const commandBus = new HybridCommandBus(new CommandBus(), new CommandBus());
-export const queryBus = new QueryBus();
-export const eventBus = new EventBus();
-
-/**
- * TODO: Register your handlers here
- *
- * Example:
- * import { CreateUserHandler } from "@repo/use-cases";
- * import { InMemoryUserRepository } from "@repo/adapter-demo";
- *
- * const userRepository = new InMemoryUserRepository();
- * const createUserHandler = new CreateUserHandler(userRepository, eventBus);
- * commandBus.registerLocalHandler(CreateUserCommand.prototype.type, createUserHandler);
- */
-EOF
-
-# Reset DI container for app-next
-cat > apps/app-next/src/di/container.ts << 'EOF'
-import { CommandBus, EventBus, HybridCommandBus, QueryBus } from "@dxbox/use-less-react/classes";
-
-/**
- * Dependency Injection Container
- *
- * This is where we wire up our hexagonal architecture:
- * - Instantiate repositories (adapters)
- * - Create use-case handlers
- * - Register handlers with command/query buses
- * - Create ViewModels with their dependencies
- */
-
-// Create buses
-export const commandBus = new HybridCommandBus(new CommandBus(), new CommandBus());
-export const queryBus = new QueryBus();
-export const eventBus = new EventBus();
-
-/**
- * TODO: Register your handlers here
- *
- * Example:
- * import { CreateUserHandler } from "@repo/use-cases";
- * import { InMemoryUserRepository } from "@repo/adapter-demo";
- *
- * const userRepository = new InMemoryUserRepository();
- * const createUserHandler = new CreateUserHandler(userRepository, eventBus);
- * commandBus.registerLocalHandler(CreateUserCommand.prototype.type, createUserHandler);
- */
-EOF
+# Remove demo module from DI in app-next
+if [ -d "apps/app-next/src/di/demo" ]; then
+  echo "  ✓ Removing apps/app-next/src/di/demo/"
+  rm -rf apps/app-next/src/di/demo
+fi
 
 # Reset app-vite home page
 cat > apps/app-vite/src/App.tsx << 'EOF'
