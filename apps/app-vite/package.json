@@ -12,7 +12,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@dxbox/use-less-react": "^0.13.0",
+    "@dxbox/use-less-react": "^0.13.1",
     "@repo/adapter-demo": "workspace:*",
     "@repo/adapter-viewmodels": "workspace:*",
     "@repo/domain": "workspace:*",
