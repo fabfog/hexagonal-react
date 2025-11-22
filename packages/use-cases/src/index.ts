@@ -17,5 +17,5 @@
  * - Handlers implement the business use cases
  */
 
-// Demo module (Task Manager example - can be deleted)
+
 export * from "./demo";

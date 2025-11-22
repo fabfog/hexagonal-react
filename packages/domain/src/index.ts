@@ -18,5 +18,5 @@
  * - Modules are self-contained and can be easily removed
  */
 
-// Demo module (Task Manager example - can be deleted)
+
 export * from "./demo";

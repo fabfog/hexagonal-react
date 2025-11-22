@@ -17,5 +17,5 @@
  * - Modules mirror the domain structure
  */
 
-// Demo module (Task Manager example - can be deleted)
+
 export * from "./demo";
