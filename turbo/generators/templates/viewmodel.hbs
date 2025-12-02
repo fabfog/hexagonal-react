@@ -1,5 +1,17 @@
-import { PubSub, EventHandlerBuilder } from "@dxbox/use-less-react/classes";
-import type { HybridCommandBus, HybridEventBusInterface, QueryBus } from "@dxbox/use-less-react/classes";
+import {
+  ReactiveStore,
+  ReactiveValue,
+  DisposableClass,
+  DisposableProperty,
+  EventHandlerBuilder,
+  EventSubscription,
+} from "@dxbox/use-less-react/classes";
+import type {
+  HybridCommandBus,
+  HybridEventBusInterface,
+  QueryBus,
+  DisposableResource,
+} from "@dxbox/use-less-react/classes";
 
 /**
  * {{pascalCase name}}ViewModel for {{pascalCase name}} UI
@@ -10,30 +22,46 @@ import type { HybridCommandBus, HybridEventBusInterface, QueryBus } from "@dxbox
  * - Manages UI state
  * - Handles user actions
  * - Communicates with use-cases via command/query buses
- * - Notifies React components of state changes via PubSub
+ * - Notifies React components of state changes via ReactiveStore
  *
  * Usage with @dxbox/use-less-react:
- * - Extends PubSub for reactive updates
- * - Consumed by React components via useReactiveInstance hook
+ * - Uses ReactiveStore for reactive updates
+ * - Consumed by React components via useDisposable + useReactiveStoreValues hooks
  */
-export class {{pascalCase name}}ViewModel extends PubSub {
-  // TODO: Add state properties
-  isLoading = false;
-  error: string | null = null;
+@DisposableClass
+export class {{pascalCase name}}ViewModel implements DisposableResource {
+  @DisposableProperty
+  store = new ReactiveStore({
+    isLoading: new ReactiveValue(false),
+    error: new ReactiveValue<string | null>(null),
+    // TODO: Add more state properties
+  });
+
+  @DisposableProperty
+  private eventSubscriptions = new EventSubscription(() => {
+    const builder = new EventHandlerBuilder(this.eventBus);
+    // TODO: Register event handlers
+    // builder.on<EventClass>(EventClass.prototype.type, async (event) => {})
+    return builder.build();
+  });
 
   constructor(
     private readonly commandBus: HybridCommandBus,
     private readonly queryBus: QueryBus,
     private readonly eventBus: HybridEventBusInterface
-  ) {
-    super();
-    this.makeReactiveProperties("isLoading", "error");
+  ) {}
+
+  // Getters for convenience
+  get isLoading(): boolean {
+    return this.store.values.isLoading.get();
   }
 
-  subscribeToEvents() {
-    return new EventHandlerBuilder(this.eventBus)
-      // .on<EventClass>(EventClass.prototype.type, async (event) => {})
-      .build();
+  get error(): string | null {
+    return this.store.values.error.get();
+  }
+
+  dispose(): void {
+    // @DisposableClass automatically disposes @DisposableProperty fields
   }
 
   // TODO: Add action methods

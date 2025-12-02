@@ -3,7 +3,7 @@
  *
  * This is a "smart" container component that:
  * - Imports and uses the concrete TaskListViewModel from @repo/adapter-viewmodels
- * - Subscribes to ViewModel state changes using useReactiveInstance
+ * - Subscribes to ViewModel state changes using useDisposable + useReactiveStoreValues
  * - Composes atomic UI components from @repo/ui
  * - Handles local UI state (form input)
  * - Lives in the app layer (can import adapters)
@@ -13,7 +13,10 @@
  */
 
 import { useEffect, useState } from "react";
-import { useReactiveInstance } from "@dxbox/use-less-react/client";
+import {
+  useDisposable,
+  useReactiveStoreValues,
+} from "@dxbox/use-less-react/client";
 import {
   Alert,
   CreateTaskForm,
@@ -26,22 +29,24 @@ import { commandBus, queryBus } from "@/di/messaging";
 export function TaskListContainer() {
   const [newTaskTitle, setNewTaskTitle] = useState("");
 
-  // Subscribe to ViewModel changes and extract state
-  const {
-    state: { error, isLoading, tasks },
-    instance: taskListViewModel,
-  } = useReactiveInstance(
-    () => new TaskListViewModel(commandBus, queryBus),
-    (vm) => ({
-      tasks: vm.tasks.map((t) => ({
+  // Create ViewModel instance (automatically disposed on unmount)
+  const taskListViewModel = useDisposable(
+    () => new TaskListViewModel(commandBus, queryBus)
+  );
+
+  // Subscribe to ViewModel store changes
+  const { tasks, isLoading, error } = useReactiveStoreValues(
+    taskListViewModel.store,
+    ["tasks", "isLoading", "error"],
+    ({ tasks, isLoading, error }) => ({
+      tasks: tasks.get().map((t) => ({
         id: t.id,
         completed: t.completed,
         title: t.title,
       })),
-      isLoading: vm.isLoading,
-      error: vm.error,
-    }),
-    ["tasks", "isLoading", "error"]
+      isLoading: isLoading.get(),
+      error: error.get(),
+    })
   );
 
   // Load tasks when component mounts

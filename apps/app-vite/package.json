@@ -12,13 +12,13 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@dxbox/use-less-react": "^0.13.1",
+    "@dxbox/use-less-react": "1.0.0-alpha.0",
     "@repo/adapter-demo": "workspace:*",
     "@repo/adapter-viewmodels": "workspace:*",
     "@repo/domain": "workspace:*",
     "@repo/ports": "workspace:*",
-    "@repo/use-cases": "workspace:*",
     "@repo/ui": "workspace:*",
+    "@repo/use-cases": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

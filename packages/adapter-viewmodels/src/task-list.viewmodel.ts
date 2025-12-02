@@ -1,5 +1,11 @@
-import { PubSub } from "@dxbox/use-less-react/classes";
-import type { HybridCommandBus, QueryBus } from "@dxbox/use-less-react/classes";
+import {
+  ReactiveStore,
+  ReactiveValue,
+  DisposableClass,
+  DisposableProperty,
+  ReactiveArray,
+} from "@dxbox/use-less-react/classes";
+import type { HybridCommandBus, QueryBus, DisposableResource } from "@dxbox/use-less-react/classes";
 import {
   CreateTaskCommand,
   CompleteTaskCommand,
@@ -18,102 +24,126 @@ import {
  * - Manages the list of tasks (UI state)
  * - Handles user actions (create, complete, delete)
  * - Communicates with use-cases via command/query buses
- * - Notifies React components of state changes via PubSub
+ * - Notifies React components of state changes via ReactiveStore
  *
  * Architecture:
- * - Extends PubSub for reactive updates
+ * - Uses ReactiveStore for reactive updates
  * - Lives in @repo/adapter-viewmodels package (inbound adapter)
  * - Instantiated in the app's DI container (apps/[app-name]/src/di/container.ts)
- * - Consumed by React components via useReactiveInstance hook
+ * - Consumed by React components via useDisposable + useReactiveStoreValues hooks
  */
-export class TaskListViewModel extends PubSub {
-  tasks: Task[] = [];
-  isLoading = false;
-  error: string | null = null;
+@DisposableClass
+export class TaskListViewModel implements DisposableResource {
+  @DisposableProperty
+  store!: ReactiveStore<{
+    tasks: ReactiveArray<Task>;
+    isLoading: ReactiveValue<boolean>;
+    error: ReactiveValue<string | null>;
+  }>;
 
   constructor(
     private readonly commandBus: HybridCommandBus,
     private readonly queryBus: QueryBus
   ) {
-    super();
-    this.makeReactiveProperties("tasks", "isLoading", "error");
+    this.store = new ReactiveStore({
+      tasks: new ReactiveArray<Task>([]),
+      isLoading: new ReactiveValue(false),
+      error: new ReactiveValue<string | null>(null),
+    });
+  }
+
+  // Getters for convenience
+  get tasks(): Task[] {
+    return this.store.values.tasks.get();
+  }
+
+  get isLoading(): boolean {
+    return this.store.values.isLoading.get();
+  }
+
+  get error(): string | null {
+    return this.store.values.error.get();
+  }
+
+  dispose(): void {
+    // @DisposableClass automatically disposes @DisposableProperty fields
   }
 
   // Actions
   async loadTasks(): Promise<void> {
-    this.isLoading = true;
+    this.store.values.isLoading.set(true);
 
-    await this.batchNotifications(async () => {
+    await this.store.batchNotifications(async ({ tasks, isLoading, error }) => {
       try {
         const result = await this.queryBus.dispatch(new ListTasksQuery());
-        this.tasks = result;
-        this.error = null;
-      } catch (error) {
-        this.error = error instanceof Error ? error.message : "Failed to load tasks";
+        tasks.set(result);
+        error.set(null);
+      } catch (err) {
+        error.set(err instanceof Error ? err.message : "Failed to load tasks");
       } finally {
-        this.isLoading = false;
+        isLoading.set(false);
       }
     });
   }
 
   async createTask(title: string): Promise<void> {
     if (!title.trim()) {
-      this.error = "Task title cannot be empty";
+      this.store.values.error.set("Task title cannot be empty");
       return;
     }
 
-    await this.batchNotifications(async () => {
+    await this.store.batchNotifications(async ({ error }) => {
       try {
-        this.error = null;
+        error.set(null);
         await this.commandBus.dispatch(new CreateTaskCommand({ title: title.trim() }));
         // Reload tasks to get the latest state
         await this.loadTasks();
-      } catch (error) {
-        this.error = error instanceof Error ? error.message : "Failed to create task";
+      } catch (err) {
+        error.set(err instanceof Error ? err.message : "Failed to create task");
       }
     });
   }
 
   async completeTask(id: string): Promise<void> {
-    await this.batchNotifications(async () => {
+    await this.store.batchNotifications(async ({ error }) => {
       try {
-        this.error = null;
+        error.set(null);
         await this.commandBus.dispatch(new CompleteTaskCommand({ taskId: id }));
         // Reload tasks to get the latest state
         await this.loadTasks();
-      } catch (error) {
-        this.error = error instanceof Error ? error.message : "Failed to complete task";
+      } catch (err) {
+        error.set(err instanceof Error ? err.message : "Failed to complete task");
       }
     });
   }
 
   async uncompleteTask(id: string): Promise<void> {
-    await this.batchNotifications(async () => {
+    await this.store.batchNotifications(async ({ error }) => {
       try {
-        this.error = null;
+        error.set(null);
         await this.commandBus.dispatch(new UncompleteTaskCommand({ taskId: id }));
         // Reload tasks to get the latest state
         await this.loadTasks();
-      } catch (error) {
-        this.error = error instanceof Error ? error.message : "Failed to uncomplete task";
+      } catch (err) {
+        error.set(err instanceof Error ? err.message : "Failed to uncomplete task");
       }
     });
   }
 
   async deleteTask(id: string): Promise<void> {
-    await this.batchNotifications(async () => {
+    await this.store.batchNotifications(async ({ error }) => {
       try {
-        this.error = null;
+        error.set(null);
         await this.commandBus.dispatch(new DeleteTaskCommand({ taskId: id }));
         // Reload tasks to get the latest state
         await this.loadTasks();
-      } catch (error) {
-        this.error = error instanceof Error ? error.message : "Failed to delete task";
+      } catch (err) {
+        error.set(err instanceof Error ? err.message : "Failed to delete task");
       }
     });
   }
 
   clearError(): void {
-    this.error = null;
+    this.store.values.error.set(null);
   }
 }

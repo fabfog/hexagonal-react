@@ -14,7 +14,7 @@ This project uses [pnpm](https://pnpm.io) workspaces and workspace protocol feat
 - 🏗️ **Hexagonal Architecture** - Clean separation of concerns with ports & adapters
 - 📦 **Monorepo** - Managed with Turborepo and pnpm workspaces
 - ⚡ **CQRS** - Command Query Responsibility Segregation pattern
-- 🔄 **Event-driven** - Event bus with PubSub pattern
+- 🔄 **Event-driven** - Event bus with reactive state management
 - 🎨 **Tailwind CSS v4** - Latest Tailwind with CSS-based config
 - 📝 **TypeScript** - Fully typed
 - 🔍 **ESLint** - Enforces architectural boundaries

@@ -56,7 +56,7 @@ export default function App() {
                 <span className="text-white text-xl font-bold">UI</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">UI</h3>
-              <p className="text-gray-600">ViewModels (PubSub) + React components</p>
+              <p className="text-gray-600">ViewModels (ReactiveStore) + React components</p>
             </div>
           </div>
 

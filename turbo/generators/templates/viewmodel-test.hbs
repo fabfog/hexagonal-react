@@ -1,10 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { {{pascalCase name}}ViewModel } from "./{{kebabCase name}}.viewmodel";
-import type { HybridCommandBus, QueryBus } from "@dxbox/use-less-react/classes";
+import type {
+  HybridCommandBus,
+  HybridEventBusInterface,
+  QueryBus,
+} from "@dxbox/use-less-react/classes";
 
 describe("{{pascalCase name}}ViewModel", () => {
   let mockCommandBus: HybridCommandBus;
   let mockQueryBus: QueryBus;
+  let mockEventBus: HybridEventBusInterface;
   let viewModel: {{pascalCase name}}ViewModel;
 
   beforeEach(() => {
@@ -16,7 +21,16 @@ describe("{{pascalCase name}}ViewModel", () => {
       dispatch: vi.fn(),
     } as any;
 
-    viewModel = new {{pascalCase name}}ViewModel(mockCommandBus, mockQueryBus);
+    mockEventBus = {
+      publish: vi.fn(),
+      registerLocalHandler: vi.fn(),
+    } as any;
+
+    viewModel = new {{pascalCase name}}ViewModel(
+      mockCommandBus,
+      mockQueryBus,
+      mockEventBus
+    );
   });
 
   describe("initialization", () => {
