@@ -90,6 +90,7 @@ In hexagonal architecture, adapters come in two flavors:
 - ❌ Cannot import use-cases, ports, or adapters
 
 Example:
+
 ```tsx
 export interface Task {
   id: string;

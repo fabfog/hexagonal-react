@@ -16,10 +16,10 @@
     "gen": "turbo gen"
   },
   "devDependencies": {
-    "@turbo/gen": "^2.6.1",
-    "eslint": "^9.0.0",
-    "prettier": "^3.1.1",
-    "turbo": "^2.6.1"
+    "@turbo/gen": "^2.6.3",
+    "eslint": "^9.39.1",
+    "prettier": "^3.7.4",
+    "turbo": "^2.6.3"
   },
   "packageManager": "pnpm@8.15.0",
   "engines": {

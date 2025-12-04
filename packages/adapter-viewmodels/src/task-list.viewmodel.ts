@@ -3,32 +3,34 @@ import {
   ReactiveValue,
   AutoDispose,
   ReactiveArray,
+  EventSubscription,
 } from "@dxbox/use-less-react/classes";
 import type { HybridCommandBus, QueryBus, Disposable } from "@dxbox/use-less-react/classes";
+import type { HybridEventBusInterface } from "@dxbox/use-less-react/classes";
 import {
-  CreateTaskCommand,
   CompleteTaskCommand,
   UncompleteTaskCommand,
   DeleteTaskCommand,
   ListTasksQuery,
+  TaskCreatedEvent,
   type Task,
 } from "@repo/domain";
 
 /**
  * TaskListViewModel - Inbound Adapter for Task List UI
  *
- * This is an **inbound adapter** that converts UI events into domain commands/queries.
+ * This is an **inbound adapter** that manages the task list state and operations.
  *
  * Responsibilities:
  * - Manages the list of tasks (UI state)
- * - Handles user actions (create, complete, delete)
+ * - Handles user actions (complete, uncomplete, delete)
  * - Communicates with use-cases via command/query buses
  * - Notifies React components of state changes via ReactiveStore
  *
  * Architecture:
  * - Uses ReactiveStore for reactive updates
  * - Lives in @repo/adapter-viewmodels package (inbound adapter)
- * - Instantiated in the app's DI container (apps/[app-name]/src/di/container.ts)
+ * - Can be composed with other ViewModels (e.g., NewTaskFormViewModel)
  * - Consumed by React components via useDisposable + useReactiveStoreValues hooks
  */
 @AutoDispose
@@ -39,9 +41,29 @@ export class TaskListViewModel implements Disposable {
     error: new ReactiveValue<string | null>(null),
   });
 
+  private eventSubscriptions = new EventSubscription(() => {
+    // Listen to TaskCreatedEvent to reload the task list
+    // Note: registerLocalHandler is available on HybridEventBus but not on the interface
+    // We need to cast to access it, or use a different approach
+    const eventBusWithHandler = this.eventBus as {
+      registerLocalHandler: (
+        type: string,
+        handler: (event: TaskCreatedEvent) => Promise<void>
+      ) => () => void;
+    };
+    const unsubscribe = eventBusWithHandler.registerLocalHandler(
+      TaskCreatedEvent.prototype.type,
+      async () => {
+        await this.loadTasks();
+      }
+    );
+    return unsubscribe;
+  });
+
   constructor(
     private readonly commandBus: HybridCommandBus,
-    private readonly queryBus: QueryBus
+    private readonly queryBus: QueryBus,
+    private readonly eventBus: HybridEventBusInterface
   ) {}
 
   // Getters for convenience
@@ -78,24 +100,6 @@ export class TaskListViewModel implements Disposable {
     });
   }
 
-  async createTask(title: string): Promise<void> {
-    if (!title.trim()) {
-      this.store.values.error.set("Task title cannot be empty");
-      return;
-    }
-
-    await this.store.batchNotifications(async ({ error }) => {
-      try {
-        error.set(null);
-        await this.commandBus.dispatch(new CreateTaskCommand({ title: title.trim() }));
-        // Reload tasks to get the latest state
-        await this.loadTasks();
-      } catch (err) {
-        error.set(err instanceof Error ? err.message : "Failed to create task");
-      }
-    });
-  }
-
   async completeTask(id: string): Promise<void> {
     await this.store.batchNotifications(async ({ error }) => {
       try {
@@ -120,6 +124,15 @@ export class TaskListViewModel implements Disposable {
         error.set(err instanceof Error ? err.message : "Failed to uncomplete task");
       }
     });
+  }
+
+  async toggleTaskCompletion(id: string): Promise<void> {
+    const task = this.tasks.find((t) => t.id === id);
+    if (task?.completed) {
+      await this.uncompleteTask(id);
+    } else {
+      await this.completeTask(id);
+    }
   }
 
   async deleteTask(id: string): Promise<void> {

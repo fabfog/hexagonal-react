@@ -21,6 +21,7 @@ pnpm gen <generator-name>
 ## Available Generators
 
 ### 1. Entity
+
 Creates a new domain entity with CRUD data types.
 
 ```bash
@@ -28,14 +29,17 @@ pnpm gen entity
 ```
 
 **Prompts:**
+
 - Entity name (e.g., User, Product)
 - Module name (e.g., auth, shop)
 
 **Generates:**
+
 - `packages/domain/src/<module>/<entity>.entity.ts`
 - Updates `packages/domain/src/<module>/index.ts`
 
 ### 2. Command
+
 Creates a complete command flow: Command + Handler + Event.
 
 ```bash
@@ -43,20 +47,24 @@ pnpm gen command
 ```
 
 **Prompts:**
+
 - Command name (e.g., CreateUser, UpdateProduct)
 - Module name
 
 **Generates:**
+
 - `packages/domain/src/<module>/<name>.command.ts`
 - `packages/domain/src/<module>/<name>ed.event.ts`
 - `packages/use-cases/src/<module>/<name>.handler.ts`
 - Updates both index files
 
 **Remember to:**
+
 - Register the handler in DI container (`apps/*/src/di/container.ts`)
 - Add event listeners if needed
 
 ### 3. Query
+
 Creates a query with its handler.
 
 ```bash
@@ -64,18 +72,22 @@ pnpm gen query
 ```
 
 **Prompts:**
+
 - Query name (e.g., GetUser, ListProducts)
 - Module name
 
 **Generates:**
+
 - `packages/domain/src/<module>/<name>.query.ts`
 - `packages/use-cases/src/<module>/<name>.handler.ts`
 - Updates both index files
 
 **Remember to:**
+
 - Register the handler in DI container
 
 ### 4. Port
+
 Creates a generic port interface.
 
 ```bash
@@ -83,14 +95,17 @@ pnpm gen port
 ```
 
 **Prompts:**
+
 - Port interface name (e.g., IEmailService, IPaymentGateway)
 - Module name
 
 **Generates:**
+
 - `packages/ports/src/<module>/<name>.interface.ts`
 - Updates `packages/ports/src/<module>/index.ts`
 
 ### 5. ViewModel
+
 Creates a reactive ViewModel for UI state management.
 
 ```bash
@@ -98,17 +113,21 @@ pnpm gen viewmodel
 ```
 
 **Prompts:**
+
 - ViewModel name (e.g., UserList, ProductDetail)
 
 **Generates:**
+
 - `packages/adapter-viewmodels/src/<name>.viewmodel.ts`
 - Updates `packages/adapter-viewmodels/src/index.ts`
 
 **Remember to:**
+
 - Instantiate in DI container
 - Create container component in apps to use it
 
 ### 6. Adapter
+
 Creates an adapter package.
 
 ```bash
@@ -116,12 +135,15 @@ pnpm gen adapter
 ```
 
 **Prompts:**
+
 - Adapter package name (e.g., "postgres")
 
 **Generates:**
+
 - `packages/adapter-<name>` with basic adapter package file structure
 
 ### 7. UI Component
+
 Creates a pure presentational React component.
 
 ```bash
@@ -129,10 +151,12 @@ pnpm gen ui-component
 ```
 
 **Prompts:**
+
 - Component name (e.g., Button, Modal, UserCard)
 - Component type (atomic, molecule, organism)
 
 **Generates:**
+
 - `packages/ui/src/<name>/<name>.tsx`
 - `packages/ui/src/<name>/index.ts`
 - Updates `packages/ui/src/index.ts`

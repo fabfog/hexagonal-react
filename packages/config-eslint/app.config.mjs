@@ -2,6 +2,7 @@ import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
+import useLessReact from "@dxbox/eslint-plugin-use-less-react";
 
 export default [
   js.configs.recommended,
@@ -28,6 +29,7 @@ export default [
     plugins: {
       react,
       "react-hooks": reactHooks,
+      "use-less-react": useLessReact,
     },
     languageOptions: {
       parserOptions: {
@@ -80,5 +82,10 @@ export default [
     rules: {
       "no-restricted-imports": "off",
     },
+  },
+  // Use recommended preset for use-less-react (includes rules only, plugin is defined above)
+  {
+    files: ["**/*.{ts,tsx}"],
+    ...useLessReact.configs.recommended[0],
   },
 ];

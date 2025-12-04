@@ -21,3 +21,4 @@
  */
 
 export * from "./task-list.viewmodel";
+export * from "./new-task-form.viewmodel";

@@ -17,9 +17,7 @@ export function TasksList({ tasks, onComplete, onDelete }: TasksListProps) {
         <li
           key={task.id}
           className={`flex items-center justify-between p-4 border rounded-lg transition-colors ${
-            task.completed
-              ? "bg-gray-50 border-gray-200"
-              : "bg-white border-gray-300"
+            task.completed ? "bg-gray-50 border-gray-200" : "bg-white border-gray-300"
           }`}
         >
           <div className="flex items-center gap-3 flex-1">
@@ -31,9 +29,7 @@ export function TasksList({ tasks, onComplete, onDelete }: TasksListProps) {
             />
             <span
               className={`flex-1 ${
-                task.completed
-                  ? "line-through text-gray-400"
-                  : "text-gray-900"
+                task.completed ? "line-through text-gray-400" : "text-gray-900"
               }`}
             >
               {task.title}

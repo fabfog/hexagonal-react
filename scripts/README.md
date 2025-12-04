@@ -31,6 +31,7 @@ pnpm remove:demo
 4. Start creating your features with `pnpm gen`
 
 The script creates a clean starting point with:
+
 - All packages properly configured
 - Empty DI containers ready for your code
 - Clean home pages in both apps

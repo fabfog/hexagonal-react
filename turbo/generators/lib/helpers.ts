@@ -6,9 +6,7 @@ import { readFileSync, writeFileSync, existsSync } from "fs";
 
 export function pascalCase(text: string): string {
   // First convert to kebab-case to handle camelCase input
-  const kebab = text
-    .replace(/([a-z])([A-Z])/g, "$1-$2")
-    .replace(/[\s_]+/g, "-");
+  const kebab = text.replace(/([a-z])([A-Z])/g, "$1-$2").replace(/[\s_]+/g, "-");
 
   // Then convert to PascalCase
   return kebab

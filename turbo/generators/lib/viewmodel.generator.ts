@@ -39,7 +39,12 @@ export function viewmodelGenerator(plop: PlopTypes.NodePlopAPI): void {
       function (answers) {
         const module = kebabCase((answers as any).module);
         const name = kebabCase((answers as any).name);
-        const modulePath = join(process.cwd(), "packages/adapter-viewmodels/src", module, "index.ts");
+        const modulePath = join(
+          process.cwd(),
+          "packages/adapter-viewmodels/src",
+          module,
+          "index.ts"
+        );
         return appendIfNotExists(modulePath, `export * from "./${name}.viewmodel";`);
       },
       // Export module in main index

@@ -20,14 +20,15 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@dxbox/use-less-react": "1.0.0-alpha.1",
+    "@dxbox/use-less-react": "1.0.0-alpha.3",
     "@repo/domain": "workspace:*"
   },
   "devDependencies": {
+    "@dxbox/eslint-plugin-use-less-react": "1.0.1",
     "@repo/config-eslint": "workspace:*",
     "@repo/config-typescript": "workspace:*",
     "@repo/config-vitest": "workspace:*",
-    "typescript": "^5.3.3",
-    "vitest": "^4.0.0"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
   }
 }

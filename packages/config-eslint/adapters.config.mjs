@@ -1,5 +1,6 @@
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
+import useLessReact from "@dxbox/eslint-plugin-use-less-react";
 
 export default [
   js.configs.recommended,
@@ -10,6 +11,9 @@ export default [
   // Type-aware linting for source files
   {
     files: ["src/**/*.ts", "src/**/*.tsx"],
+    plugins: {
+      "use-less-react": useLessReact,
+    },
     languageOptions: {
       parserOptions: {
         project: true,
@@ -42,6 +46,11 @@ export default [
         },
       ],
     },
+  },
+  // Use recommended preset for use-less-react (includes rules only, plugin is defined above)
+  {
+    files: ["src/**/*.ts", "src/**/*.tsx"],
+    ...useLessReact.configs.recommended[0],
   },
   // Type-aware linting for config files using tsconfig.vitest.json
   {

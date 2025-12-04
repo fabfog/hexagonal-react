@@ -2,39 +2,35 @@
  * TaskListContainer - Container Component
  *
  * This is a "smart" container component that:
- * - Imports and uses the concrete TaskListViewModel from @repo/adapter-viewmodels
+ * - Composes multiple ViewModels (TaskListViewModel + NewTaskFormViewModel)
  * - Subscribes to ViewModel state changes using useDisposable + useReactiveStoreValues
  * - Composes atomic UI components from @repo/ui
- * - Handles local UI state (form input)
+ * - Connects ViewModel methods to UI components (no business logic)
  * - Lives in the app layer (can import adapters)
  *
- * This demonstrates the Container/Presentational Component pattern
- * combined with Hexagonal Architecture.
+ * This demonstrates:
+ * - Container/Presentational Component pattern
+ * - ViewModel composition (avoiding "god ViewModel")
+ * - Hexagonal Architecture
+ *
+ * Note: All business logic and UI state management is in the ViewModels.
+ * The container only connects ViewModels to UI components.
  */
 
-import { useEffect, useState } from "react";
-import {
-  useDisposable,
-  useReactiveStoreValues,
-} from "@dxbox/use-less-react/client";
-import {
-  Alert,
-  CreateTaskForm,
-  LoadingSpinner,
-  TasksList,
-} from "@repo/ui";
-import { TaskListViewModel } from "@repo/adapter-viewmodels";
-import { commandBus, queryBus } from "@/di/messaging";
+import { useEffect } from "react";
+import { useDisposable, useReactiveStoreValues } from "@dxbox/use-less-react/client";
+import { Alert, CreateTaskForm, LoadingSpinner, TasksList } from "@repo/ui";
+import { TaskListViewModel, NewTaskFormViewModel } from "@repo/adapter-viewmodels";
+import { commandBus, queryBus, eventBus } from "@/di/messaging";
 
 export function TaskListContainer() {
-  const [newTaskTitle, setNewTaskTitle] = useState("");
-
-  // Create ViewModel instance (automatically disposed on unmount)
+  // Create ViewModel instances (automatically disposed on unmount)
   const taskListViewModel = useDisposable(
-    () => new TaskListViewModel(commandBus, queryBus)
+    () => new TaskListViewModel(commandBus, queryBus, eventBus)
   );
+  const newTaskFormViewModel = useDisposable(() => new NewTaskFormViewModel(commandBus));
 
-  // Subscribe to ViewModel store changes
+  // Subscribe to TaskListViewModel store changes
   const { tasks, isLoading, error } = useReactiveStoreValues(
     taskListViewModel.store,
     ["tasks", "isLoading", "error"],
@@ -49,46 +45,36 @@ export function TaskListContainer() {
     })
   );
 
+  // Subscribe to NewTaskFormViewModel store changes
+  const {
+    newTaskTitle,
+    isSubmitting: isFormSubmitting,
+    error: formError,
+  } = useReactiveStoreValues(newTaskFormViewModel.store, ["newTaskTitle", "isSubmitting", "error"]);
+
   // Load tasks when component mounts
   useEffect(() => {
     taskListViewModel.loadTasks();
   }, [taskListViewModel]);
 
-  // Callbacks
-  const handleCreateTask = () => {
-    if (newTaskTitle.trim()) {
-      taskListViewModel.createTask(newTaskTitle.trim());
-      setNewTaskTitle("");
-    }
-  };
-
-  const handleCompleteTask = (id: string) => {
-    const task = tasks.find((t) => t.id === id);
-    if (task?.completed) {
-      taskListViewModel.uncompleteTask(id);
-    } else {
-      taskListViewModel.completeTask(id);
-    }
-  };
-
-  const handleDeleteTask = (id: string) => {
-    taskListViewModel.deleteTask(id);
-  };
-
-  const handleClearError = () => {
-    taskListViewModel.clearError();
-  };
-
-  // Render composition of atomic components
   return (
     <div className="w-full max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-gray-900 mb-6">Task Manager Demo</h2>
 
-      {/* Error Alert */}
+      {/* Error Alert - Task List */}
       {error && (
         <div className="mb-4">
-          <Alert severity="error" onClose={handleClearError}>
+          <Alert severity="error" onClose={() => taskListViewModel.clearError()}>
             {error}
+          </Alert>
+        </div>
+      )}
+
+      {/* Error Alert - Form */}
+      {formError && (
+        <div className="mb-4">
+          <Alert severity="error" onClose={() => newTaskFormViewModel.clearError()}>
+            {formError}
           </Alert>
         </div>
       )}
@@ -97,9 +83,9 @@ export function TaskListContainer() {
       <div className="mb-6">
         <CreateTaskForm
           value={newTaskTitle}
-          onChange={setNewTaskTitle}
-          onSubmit={handleCreateTask}
-          disabled={isLoading}
+          onChange={(value) => newTaskFormViewModel.setNewTaskTitle(value)}
+          onSubmit={() => newTaskFormViewModel.submitNewTask()}
+          disabled={isLoading || isFormSubmitting}
         />
       </div>
 
@@ -108,9 +94,7 @@ export function TaskListContainer() {
 
       {/* Empty State */}
       {!isLoading && tasks.length === 0 && (
-        <Alert severity="info">
-          No tasks yet. Create one to get started!
-        </Alert>
+        <Alert severity="info">No tasks yet. Create one to get started!</Alert>
       )}
 
       {/* Tasks List */}
@@ -118,14 +102,13 @@ export function TaskListContainer() {
         <>
           <TasksList
             tasks={tasks}
-            onComplete={handleCompleteTask}
-            onDelete={handleDeleteTask}
+            onComplete={(id) => taskListViewModel.toggleTaskCompletion(id)}
+            onDelete={(id) => taskListViewModel.deleteTask(id)}
           />
 
           {/* Task Count */}
           <div className="mt-4 text-sm text-gray-500 text-center">
-            {tasks.filter((t) => !t.completed).length} of {tasks.length} tasks
-            remaining
+            {tasks.filter((t) => !t.completed).length} of {tasks.length} tasks remaining
           </div>
         </>
       )}

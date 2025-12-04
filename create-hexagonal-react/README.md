@@ -92,12 +92,14 @@ pnpm dev
 ```
 
 Your apps will be running at:
+
 - **Next.js**: http://localhost:3001
 - **Vite**: http://localhost:3002
 
 ## Demo Feature
 
 The template includes a complete demo feature (Task Manager) that demonstrates:
+
 - CQRS pattern with commands and queries
 - Event-driven architecture
 - Container/Presentational component pattern
@@ -112,6 +114,7 @@ pnpm remove:demo
 ```
 
 This will automatically:
+
 - Remove all demo code from domain, ports, use-cases, and adapters
 - Clean up demo components from both apps
 - Reset DI containers to minimal setup
