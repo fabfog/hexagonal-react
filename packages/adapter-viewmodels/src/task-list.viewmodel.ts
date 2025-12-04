@@ -1,11 +1,10 @@
 import {
   ReactiveStore,
   ReactiveValue,
-  DisposableClass,
-  DisposableProperty,
+  AutoDispose,
   ReactiveArray,
 } from "@dxbox/use-less-react/classes";
-import type { HybridCommandBus, QueryBus, DisposableResource } from "@dxbox/use-less-react/classes";
+import type { HybridCommandBus, QueryBus, Disposable } from "@dxbox/use-less-react/classes";
 import {
   CreateTaskCommand,
   CompleteTaskCommand,
@@ -32,25 +31,18 @@ import {
  * - Instantiated in the app's DI container (apps/[app-name]/src/di/container.ts)
  * - Consumed by React components via useDisposable + useReactiveStoreValues hooks
  */
-@DisposableClass
-export class TaskListViewModel implements DisposableResource {
-  @DisposableProperty
-  store!: ReactiveStore<{
-    tasks: ReactiveArray<Task>;
-    isLoading: ReactiveValue<boolean>;
-    error: ReactiveValue<string | null>;
-  }>;
+@AutoDispose
+export class TaskListViewModel implements Disposable {
+  store = new ReactiveStore({
+    tasks: new ReactiveArray<Task>([]),
+    isLoading: new ReactiveValue(false),
+    error: new ReactiveValue<string | null>(null),
+  });
 
   constructor(
     private readonly commandBus: HybridCommandBus,
     private readonly queryBus: QueryBus
-  ) {
-    this.store = new ReactiveStore({
-      tasks: new ReactiveArray<Task>([]),
-      isLoading: new ReactiveValue(false),
-      error: new ReactiveValue<string | null>(null),
-    });
-  }
+  ) {}
 
   // Getters for convenience
   get tasks(): Task[] {
@@ -65,8 +57,8 @@ export class TaskListViewModel implements DisposableResource {
     return this.store.values.error.get();
   }
 
-  dispose(): void {
-    // @DisposableClass automatically disposes @DisposableProperty fields
+  [Symbol.dispose](): void {
+    // @AutoDispose automatically disposes all properties that implement Disposable
   }
 
   // Actions

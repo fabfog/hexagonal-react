@@ -1,8 +1,7 @@
 import {
   ReactiveStore,
   ReactiveValue,
-  DisposableClass,
-  DisposableProperty,
+  AutoDispose,
   EventHandlerBuilder,
   EventSubscription,
 } from "@dxbox/use-less-react/classes";
@@ -10,7 +9,7 @@ import type {
   HybridCommandBus,
   HybridEventBusInterface,
   QueryBus,
-  DisposableResource,
+  Disposable,
 } from "@dxbox/use-less-react/classes";
 
 /**
@@ -28,16 +27,14 @@ import type {
  * - Uses ReactiveStore for reactive updates
  * - Consumed by React components via useDisposable + useReactiveStoreValues hooks
  */
-@DisposableClass
-export class {{pascalCase name}}ViewModel implements DisposableResource {
-  @DisposableProperty
+@AutoDispose
+export class {{pascalCase name}}ViewModel implements Disposable {
   store = new ReactiveStore({
     isLoading: new ReactiveValue(false),
     error: new ReactiveValue<string | null>(null),
     // TODO: Add more state properties
   });
 
-  @DisposableProperty
   private eventSubscriptions = new EventSubscription(() => {
     const builder = new EventHandlerBuilder(this.eventBus);
     // TODO: Register event handlers
@@ -60,8 +57,8 @@ export class {{pascalCase name}}ViewModel implements DisposableResource {
     return this.store.values.error.get();
   }
 
-  dispose(): void {
-    // @DisposableClass automatically disposes @DisposableProperty fields
+  [Symbol.dispose](): void {
+    // @AutoDispose automatically disposes all properties that implement Disposable
   }
 
   // TODO: Add action methods

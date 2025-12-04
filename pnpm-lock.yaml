@@ -24,8 +24,8 @@ importers:
   apps/app-next:
     dependencies:
       '@dxbox/use-less-react':
-        specifier: 1.0.0-alpha.0
-        version: 1.0.0-alpha.0(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0)
+        specifier: 1.0.0-alpha.1
+        version: 1.0.0-alpha.1(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0)
       '@repo/adapter-demo':
         specifier: workspace:*
         version: link:../../packages/adapter-demo
@@ -88,8 +88,8 @@ importers:
   apps/app-vite:
     dependencies:
       '@dxbox/use-less-react':
-        specifier: 1.0.0-alpha.0
-        version: 1.0.0-alpha.0(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0)
+        specifier: 1.0.0-alpha.1
+        version: 1.0.0-alpha.1(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0)
       '@repo/adapter-demo':
         specifier: workspace:*
         version: link:../../packages/adapter-demo
@@ -174,8 +174,8 @@ importers:
   packages/adapter-viewmodels:
     dependencies:
       '@dxbox/use-less-react':
-        specifier: 1.0.0-alpha.0
-        version: 1.0.0-alpha.0(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0)
+        specifier: 1.0.0-alpha.1
+        version: 1.0.0-alpha.1(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0)
       '@repo/domain':
         specifier: workspace:*
         version: link:../domain
@@ -234,8 +234,8 @@ importers:
   packages/domain:
     dependencies:
       '@dxbox/use-less-react':
-        specifier: 1.0.0-alpha.0
-        version: 1.0.0-alpha.0(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0)
+        specifier: 1.0.0-alpha.1
+        version: 1.0.0-alpha.1(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0)
     devDependencies:
       '@repo/config-eslint':
         specifier: workspace:*
@@ -300,8 +300,8 @@ importers:
   packages/use-cases:
     dependencies:
       '@dxbox/use-less-react':
-        specifier: 1.0.0-alpha.0
-        version: 1.0.0-alpha.0(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0)
+        specifier: 1.0.0-alpha.1
+        version: 1.0.0-alpha.1(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0)
       '@repo/domain':
         specifier: workspace:*
         version: link:../domain
@@ -522,8 +522,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
-  /@dxbox/use-less-react@1.0.0-alpha.0(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0):
-    resolution: {integrity: sha512-yy8AOCZFKqGnrJKSwEXOFvFzxfhcSddDL+r+AFy2/FrH/MSf6Y40B+GgdtxmRzBlJodp+v8XtJz8wR0wHydwiQ==}
+  /@dxbox/use-less-react@1.0.0-alpha.1(fast-deep-equal@3.1.3)(immer@10.2.0)(react-dom@19.2.0)(react@19.2.0):
+    resolution: {integrity: sha512-1PAYrXefJsb7+oApbFNISQ53+zQaopCj40CASxpqZyRWr6ZFEoGVm60roTpD8YkfcE96UqhEtj29qgzjAyayWw==}
     peerDependencies:
       fast-deep-equal: ^3.1.3
       immer: ^10.0.0
