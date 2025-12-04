@@ -51,6 +51,16 @@ export default [
   {
     files: ["src/**/*.ts", "src/**/*.tsx"],
     ...useLessReact.configs.recommended[0],
+    rules: {
+      ...useLessReact.configs.recommended[0].rules,
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+    },
   },
   // Type-aware linting for config files using tsconfig.vitest.json
   {

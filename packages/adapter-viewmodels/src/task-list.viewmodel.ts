@@ -41,7 +41,7 @@ export class TaskListViewModel implements Disposable {
     error: new ReactiveValue<string | null>(null),
   });
 
-  private eventSubscriptions = new EventSubscription(() => {
+  protected eventSubscriptions = new EventSubscription(() => {
     // Listen to TaskCreatedEvent to reload the task list
     // Note: registerLocalHandler is available on HybridEventBus but not on the interface
     // We need to cast to access it, or use a different approach
