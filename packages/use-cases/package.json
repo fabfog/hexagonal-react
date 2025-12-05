@@ -20,7 +20,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@dxbox/use-less-react": "1.0.0-alpha.3",
+    "@dxbox/use-less-react": "1.0.0-alpha.4",
     "@repo/domain": "workspace:*",
     "@repo/ports": "workspace:*"
   },

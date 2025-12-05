@@ -28,6 +28,6 @@
     "vitest": "^4.0.15"
   },
   "dependencies": {
-    "@dxbox/use-less-react": "1.0.0-alpha.3"
+    "@dxbox/use-less-react": "1.0.0-alpha.4"
   }
 }
